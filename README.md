@@ -1,0 +1,2 @@
+# coffeeShop - SE 352
+This course focuses on applying object-oriented techniques in the design and development of software systems for enterprise applications. Topics include component architecture, such as Java Beans and Enterprise Java Beans, GUI components, such as Swing, database connectivity and object repositories, server application integration using technologies such as servlets, Java Server Pages, JDBC and RMI, security and internationalization. 
