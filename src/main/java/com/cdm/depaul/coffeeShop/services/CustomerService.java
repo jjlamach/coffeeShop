@@ -30,6 +30,8 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public void deleteAllCustomers () { customerRepository.deleteAll(); }
+
     public void deleteCustomerById (Long customerId) {
         customerRepository.deleteById(customerId);
     }

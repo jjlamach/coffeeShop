@@ -29,6 +29,14 @@ public class Order implements iOrder, Serializable {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    public Order () { }
+
+    public Order(String orderName, String description, double price) {
+        this.orderName = orderName;
+        this.description = description;
+        this.price = price;
+    }
+
     @Override
     public void setName(String name) {
         this.orderName = name;

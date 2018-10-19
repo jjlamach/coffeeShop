@@ -8,6 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
@@ -16,7 +19,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.cdm.depaul.coffeeShop" })
-public class ApplicationContext {
+public class ApplicationContext implements WebMvcConfigurer {
 
     @Bean
     public Customer customer () {
@@ -32,11 +35,32 @@ public class ApplicationContext {
     public CustomerService customerService() {return new CustomerService(); }
 
 
+    /*
+        --- Redirects to any view when invoked ---
+        Immediately forwards to a view when invoked.
+        I assume that since the DispatcherServlet is the first controller to be invoked "/" then
+        it will redirect to "home" view.
+     */
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("home");
+    }
+
     @Bean
     public ViewResolver viewResolver () {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("WEB-INF/jsp/");
+        viewResolver.setPrefix("WEB-INF/view/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
+    }
+
+    /**
+     * Tells Spring where to find the resources for the WebApp
+     * @param resourceHandlerRegistry
+     */
+    public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry) {
+        resourceHandlerRegistry.addResourceHandler( "/webjars/**", "/resources/**")
+                .addResourceLocations("/webjars/")
+                .addResourceLocations("/resources/");
     }
 }
