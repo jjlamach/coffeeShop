@@ -27,9 +27,11 @@ public class CoffeeShopApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Customer customer = new Customer("Julio", "Lama", "1730 North clark Street");
 
-        customerService.saveCustomer(customer);
-//        customerService.deleteAllCustomers();
-        
-        
+        Order order = new Order("Vanilla Cold Brew", "Iced coffee", 3.00);
+        customer.addOrder(order);
+        order.setCustomer(customer);
+
+//        customerService.saveCustomer(customer);
+        customerService.deleteCustomerById(1L);
     }
 }

@@ -15,18 +15,26 @@ import java.util.Objects;
 @Scope("prototype")
 public class Customer implements iCustomer, Serializable {
 
+    /*
+        Primary key
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
     private Long id;
+
     @Column
     private String firstName;
+
     @Column
     private String lastName;
+
     @Column
     private String address;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id", fetch = FetchType.EAGER)
+    /*
+        Order Primary Key references Customer Primary Key (Foreign Key).
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Order> orderList = new ArrayList<Order>();
 
     public Customer() { }

@@ -13,6 +13,9 @@ import java.util.Objects;
 @Component
 @Scope("prototype")
 public class Order implements iOrder, Serializable {
+    /*
+        Primary key
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_number")
@@ -25,7 +28,7 @@ public class Order implements iOrder, Serializable {
     @Column
     private double price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

@@ -2,6 +2,7 @@ package com.cdm.depaul.coffeeShop.services;
 
 import com.cdm.depaul.coffeeShop.entities.Customer;
 import com.cdm.depaul.coffeeShop.repositories.CustomerRepository;
+import com.cdm.depaul.coffeeShop.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,9 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     public CustomerService () { }
 
