@@ -10,7 +10,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     }
 
     /**
-     * Tell the Front Controller where the applicationContext is.
+     * Tell the Front Controller where the applicationContext/app configuration is.
      * @return
      */
     @Override

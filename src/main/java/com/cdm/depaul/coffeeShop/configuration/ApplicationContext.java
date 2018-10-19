@@ -14,10 +14,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
- * ApplicationContext.xml, where you register for your Spring Beans here.
+ * ApplicationContext.xml. You register your Spring Beans here and configure your app.
+ *
+ * - Defines callback methods to customize the Java-based configuration for Spring MVC enabled via @EnableWebMvc.
+ *
+ * - @EnableWebMvc-annotated configuration classes may implement this interface
+ *      to be called back and given a chance to customize the default configuration.
  */
 @Configuration
-@EnableWebMvc
+@EnableWebMvc   // Will customize the default configuration.
 @ComponentScan(basePackages = { "com.cdm.depaul.coffeeShop" })
 public class ApplicationContext implements WebMvcConfigurer {
 
@@ -35,9 +40,9 @@ public class ApplicationContext implements WebMvcConfigurer {
     public CustomerService customerService() {return new CustomerService(); }
 
 
-    /*
+    /**
         --- Redirects to any view when invoked ---
-        Immediately forwards to a view when invoked.
+        "Immediately forwards to a view when invoked."
         I assume that since the DispatcherServlet is the first controller to be invoked "/" then
         it will redirect to "home" view.
      */
@@ -55,7 +60,8 @@ public class ApplicationContext implements WebMvcConfigurer {
     }
 
     /**
-     * Tells Spring where to find the resources for the WebApp
+     * Tell Spring where to find the resources for the WebApp.
+     * If this is not overridden then it won't find the resources
      * @param resourceHandlerRegistry
      */
     public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry) {

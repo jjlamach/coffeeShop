@@ -9,15 +9,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * Serialization: where an object can be represented as a sequence of bytes that
+ * includes the object's data as well as information about the object's type and the types of data stored in the object.
+ *
+ * - Can be written to a file and turn back to an object in memory again (deserialization).
+ */
 @Entity
 @Component
 @Scope("prototype")
 public class Customer implements iCustomer, Serializable {
 
+
+    private static final long serialVersionUID = 870052873754135183L;
+
     /*
-        Primary key
-     */
+            Primary key
+         */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
@@ -31,9 +39,8 @@ public class Customer implements iCustomer, Serializable {
 
     @Column
     private String address;
-    /*
-        Order Primary Key references Customer Primary Key (Foreign Key).
-     */
+
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Order> orderList = new ArrayList<Order>();
 

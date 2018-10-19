@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @Scope("singleton")
 public class CoffeeShopController {
-//
+
+
 //    @Autowired
 //    private CustomerService customerService;
 
@@ -22,11 +23,12 @@ public class CoffeeShopController {
         return "home";
     }
 
+
     @RequestMapping(value = {"/products"})
     public String products (HttpServletRequest request, HttpServletResponse response, Model model) {
-
         return "products";
     }
+
 
     @RequestMapping(value = {"/shoppingcart"})
     public String shoppingCart (HttpServletRequest request, HttpServletResponse response, Model model) {

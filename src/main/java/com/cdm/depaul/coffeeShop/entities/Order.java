@@ -8,13 +8,24 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Serialization: where an object can be represented as a sequence of bytes that
+ * includes the object's data as well as information about the object's type and the types of data stored in the object.
+ *
+ * - Can be written to a file and turn back to an object in memory again (deserialization).
+ */
 @Entity
 @Table(name = "customer_order")
 @Component
 @Scope("prototype")
 public class Order implements iOrder, Serializable {
+
+    private static final long serialVersionUID = 4876487231629720215L;
+
+
     /*
-        Primary key
+        Primary Key
+        customer_order add constraint FKf9abd30bhiqvugayxlpq8ryq9 foreign key (customer_id) references customer (customer_id)
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -97,10 +108,12 @@ public class Order implements iOrder, Serializable {
                 Objects.equals(getCustomer(), order.getCustomer());
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(getId(), orderName, getDescription(), getPrice(), getCustomer());
     }
+
 
     @Override
     public String toString() {
