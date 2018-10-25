@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @Component
-@Scope("singleton")
+@Scope("singleton") // Only one instance
 public class CustomerService {
 
     @Autowired

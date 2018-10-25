@@ -22,7 +22,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  *      to be called back and given a chance to customize the default configuration.
  */
 @Configuration
-@EnableWebMvc   // Will customize the default configuration.
+@EnableWebMvc
 @ComponentScan(basePackages = { "com.cdm.depaul.coffeeShop" })
 public class ApplicationContext implements WebMvcConfigurer {
 
