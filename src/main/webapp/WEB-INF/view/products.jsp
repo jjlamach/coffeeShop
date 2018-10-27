@@ -38,12 +38,13 @@
     </div>
 </nav>
 <br/>
+<br/>
 <%-- 3 section row --%>
 <div class="container">
     <div class="row">
         <%--Coffee--%>
         <div class="col-sm">
-            <a class="card" href="/products/coffee">
+            <a class="card" href="/coffee">
                 <img class="card-img-top"
                      src="${pageContext.request.contextPath}/resources/images/coffee.png"
                      width="260" height="270">
@@ -54,7 +55,7 @@
         </div>
         <%--Sweets--%>
         <div class="col-sm">
-            <a class="card" href="#">
+            <a class="card" href="/sweets">
                 <img class="card-img-top"
                      src="${pageContext.request.contextPath}/resources/images/cake.png"
                      width="260" height="270">
@@ -65,7 +66,7 @@
         </div>
         <%--Other--%>
         <div class="col-sm">
-            <a class="card" href="#">
+            <a class="card" href="/amenities">
                 <img class="card-image-top"
                      src="${pageContext.request.contextPath}/resources/images/randomFood.png"
                      height="270" width="260">

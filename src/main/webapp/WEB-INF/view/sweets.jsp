@@ -35,48 +35,57 @@
         </div>
     </div>
 </nav>
+
 <br/>
 <br/>
 
 <div class="container" align="center">
-    <img class="img-thumbnail" src="${pageContext.request.contextPath}/resources/images/shoppingCart.png"
-         style="width: 350px; height: 350px; border-width: thick; border-color: cadetblue ">
-    <br/><br/>
-    <div class="table-responsive">
-        <table class="table table-hover table-striped table-bordered">
-            <thead>
-            <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-            </tr>
-            </tbody>
-        </table>
+    <%--How many columns to occupy: 4 --%>
+    <div class="col-lg-4">
+        <div class="card">
+            <h6 class="card-header">
+                Strawberry Cheesecake
+            </h6>
+            <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/Strawberry-Cheese-Cake.png"
+                 style="width: 150px; height: 150px;">
+
+            <div class="card-body">
+                <p class="card-text">
+                    Try our delicious cheesecake!
+                </p>
+            </div>
+            <footer class="card-footer">
+                <button class="btn btn-sm btn-primary left-button">Add to cart</button>
+                <button class="btn btn-sm btn-danger right-button">Remove from cart</button>
+            </footer>
+        </div>
+        <br/>
+        <div class="card">
+            <h6 class="card-header">
+                Oreo Cheesecake
+            </h6>
+            <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/oreo.png"
+                 style="width: 150px; height: 150px;">
+            <div class="card-body">
+                <p class="card-text">
+                    Give our Oreo cheesecake a try!
+                </p>
+            </div>
+            <footer class="card-footer">
+                <button class="btn btn-sm btn-primary left-button">Add to cart</button>
+                <button class="btn btn-sm btn-danger right-button">Remove from cart</button>
+            </footer>
+        </div>
+
     </div>
 </div>
 
-
-
-
-
-
+<%--Shopping cart as a navbar--%>
+<a class="navbar float-lg-right" href="/shoppingcart">
+    <div class="text-center">
+        <i class="fa fa-shopping-cart fa-4x"></i>
+    </div>
+</a>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>

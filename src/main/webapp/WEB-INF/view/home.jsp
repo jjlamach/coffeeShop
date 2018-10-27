@@ -42,6 +42,7 @@
 </nav>
 <%--End of navigation bar--%>
 <br/>
+<br/>
 
 <%--Image--%>
 <div class="card rounded-circle" style="width: 30rem; background-color: saddlebrown">
