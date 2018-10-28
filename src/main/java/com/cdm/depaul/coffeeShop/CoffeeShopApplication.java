@@ -32,24 +32,9 @@ public class CoffeeShopApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        try {
-
-            Customer customer = new Customer("Julio",
-                    "Lama",
-                    "1730 North Clark Street");
-
-            Order order = new Order("Chocolate cake",
-                    "Big chocolate cake",
-                    7.00);
-
-            customer.addOrder(order);
-            order.setCustomer(customer);
-
-            // Ask the Service object to save the customer.
-            customerService.saveCustomer(customer);
-
-        } catch (Exception exception) {
-            applicationLogger.log(Level.SEVERE, "Could not add customer and order to tables.", exception);
-        }
+//        Customer customer = new Customer("Julio", "Lama", "1730 North Clark Street");
+////        customerService.saveCustomer(customer);
+//        Customer findOne = customerService.findByFirstAndLast(customer.getFirstName(), customer.getLastName());
+//        System.out.println("Found it:" + findOne.toString());
     }
 }

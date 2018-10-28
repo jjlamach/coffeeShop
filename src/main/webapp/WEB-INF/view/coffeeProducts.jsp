@@ -1,6 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sweets & Coffee</title>
     <script src= "${pageContext.request.contextPath}/resources/jquery/jquery.js"></script>
     <script src= "${pageContext.request.contextPath}/resources/js/coffee.js"></script>
@@ -50,7 +55,7 @@ they resize when screen shrinks--%>
     <div class="col-lg-4">
 
         <div class="card">
-            <h6 class="card-header">
+            <h6 class="card-header" id="coldBrew">
                 Coffee
             </h6>
             <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/Rcoffee.png"
@@ -61,13 +66,18 @@ they resize when screen shrinks--%>
                 </p>
             </div>
             <footer class="card-footer">
-                <button class="btn btn-sm btn-primary left-button">Add to cart</button>
-                <button class="btn btn-sm btn-danger right-button">Remove from cart</button>
+                <%--Create the link for adding a cold brew--%>
+                <input type="button" value="Add to cart" class="btn btn-sm btn-primary left-button"
+                onclick="window.location.href='shoppingcart'; return false"/>
+
+                <input type="button" value="Remove from cart" class="btn btn-sm btn-danger right-button"/>
                 <br/><br/>
                 <strong>Price:</strong> $1.50
             </footer>
         </div>
         <br/>
+
+
         <div class="card">
             <h6 class="card-header">
                 Cappuccino
@@ -93,6 +103,7 @@ they resize when screen shrinks--%>
             </footer>
         </div>
         <br/>
+
         <div class="card">
             <h6 class="card-header">
                 Cold Brew
@@ -109,13 +120,13 @@ they resize when screen shrinks--%>
             </div>
 
             <footer class="card-footer">
-                <button class="btn btn-sm btn-primary left-button">Add to cart</button>
-                <button class="btn btn-sm btn-danger right-button">Remove from cart</button>
+                <button type="submit" name="coldBrew" class="btn btn-sm btn-primary left-button">Add to cart</button>
+                <button type="submit" class="btn btn-sm btn-danger right-button">Remove from cart</button>
                 <br/><br/>
                 <strong>Price:</strong> $3.50
             </footer>
-
         </div>
+
     </div>
 </div>
 
@@ -125,6 +136,8 @@ they resize when screen shrinks--%>
         <i class="fa fa-shopping-cart fa-4x"></i>
     </div>
 </a>
+
+
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
       integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"

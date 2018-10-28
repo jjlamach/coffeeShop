@@ -3,4 +3,8 @@ $(document).ready(function () {
     if ( $(".card").is(":hidden")) {
         $(".card").fadeIn("slow");
     }
+
+
+
+
 });

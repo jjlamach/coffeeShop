@@ -72,6 +72,10 @@
     </div>
 </div>
 
+<div>
+${customer.firstName} ${customer.allOrders}
+</div>
+
 
 
 

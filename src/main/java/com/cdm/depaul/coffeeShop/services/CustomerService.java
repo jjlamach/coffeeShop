@@ -51,12 +51,27 @@ public class CustomerService {
     }
 
 
-    public Customer findCustomer (Long customerId) {
+    /*
+        Need to find it and then edit it.
+     */
+    public Customer findCustomerById (Long customerId) {
         Optional <Customer> findOne = customerRepository.findById(customerId);
         return optionalToCustomer(findOne);
     }
 
 
+    public Customer findByFirstAndLast (String firstName, String lastName) {
+        Optional <Customer> result = customerRepository.findByFirstNameAndLastName(firstName, lastName);
+        Customer customerObj = optionalToCustomer(result);
+        return customerObj;
+    }
+
+
+    /**
+     * Maps the Optional object as a Customer object.
+     * @param optionalCustomer
+     * @return
+     */
     private Customer optionalToCustomer (Optional <Customer> optionalCustomer) {
         Customer customer = new Customer();
         if (optionalCustomer.isPresent()) {

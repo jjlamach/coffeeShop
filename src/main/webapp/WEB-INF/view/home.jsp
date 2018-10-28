@@ -35,6 +35,10 @@
         <%--Lol... Use another Navbar.--%>
         <div class="navbar-nav">
             <li class="nav-item">
+                <strong>Signed in as:</strong><span>${customer.firstName}</span>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="#">Sign Out</a>
             </li>
         </div>
