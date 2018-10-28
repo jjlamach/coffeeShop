@@ -26,7 +26,7 @@
     Login form: llama al Controller; invoka el URL: /home y hace el metodo post.
 
 --%>
-<form action="/login" method="POST" class="container col-lg-4" >
+<form action="/login" method="GET" class="container col-lg-4" >
     <div class="form-group">
         <label for="fName">First name</label>
         <input type="text" name="firstName" class="form-control" id="fName">
@@ -41,8 +41,8 @@
         <label for="addrss">Address</label>
         <input type="text" name="address" class="form-control" id="addrss">
     </div>
-
-    <input class="btn btn-sm btn-primary" type="submit">
+    <input class="btn btn-sm btn-primary left-button" type="submit" value="Login">
+    <a href="/createAccount" class="btn btn-sm btn-warning right-button">Create an account</a>
 </form>
 
 

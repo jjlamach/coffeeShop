@@ -32,9 +32,6 @@ public class CoffeeShopApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        Customer customer = new Customer("Julio", "Lama", "1730 North Clark Street");
-////        customerService.saveCustomer(customer);
-//        Customer findOne = customerService.findByFirstAndLast(customer.getFirstName(), customer.getLastName());
-//        System.out.println("Found it:" + findOne.toString());
+        
     }
 }

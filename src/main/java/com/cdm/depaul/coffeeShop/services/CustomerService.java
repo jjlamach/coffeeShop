@@ -60,10 +60,9 @@ public class CustomerService {
     }
 
 
-    public Customer findByFirstAndLast (String firstName, String lastName) {
-        Optional <Customer> result = customerRepository.findByFirstNameAndLastName(firstName, lastName);
-        Customer customerObj = optionalToCustomer(result);
-        return customerObj;
+    public Customer findByFirstAndLastAndAddress (String firstName, String lastName, String address) {
+        Optional <Customer> result = customerRepository.findByFirstNameAndLastNameAAndAddress(firstName, lastName, address);
+        return optionalToCustomer(result);
     }
 
 
