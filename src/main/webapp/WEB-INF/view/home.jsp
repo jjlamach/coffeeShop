@@ -35,11 +35,7 @@
         <%--Lol... Use another Navbar.--%>
         <div class="navbar-nav">
             <li class="nav-item">
-                <strong>Signed in as:</strong><span>${customer.firstName}</span>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">Sign Out</a>
+                <a class="nav-link" href="/logout">Sign Out</a>
             </li>
         </div>
     </div>
@@ -57,6 +53,7 @@
 <%--End of image --%>
 
 
+
 <!-- Footer -->
 <footer class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
     <%--Copyright stuff--%>
@@ -64,6 +61,7 @@
         <span class="text-muted">
             By Julio Lama
             -- SE 352
+            ${sessionScope.get("customerSession")};
         </span>
     </div>
     <%--End of Copyright stuff--%>

@@ -38,25 +38,50 @@ public class CoffeeShopController {
 
     @RequestMapping(value = {"/shoppingcart"}, method = RequestMethod.GET)
     public String addToShoppingCart(HttpServletRequest request, HttpServletResponse response, Model model) {
-
         return "shopping";
     }
 
     /*
         TODO: Save a session for each user that registers.
+        @CookieValue("cookieName") String cookieValue
+                     "cookieName" = cookie value.
      */
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String login (HttpSession session, HttpServletResponse response, HttpServletRequest request,
+    public String login (HttpServletResponse response, HttpServletRequest request,
                          @RequestParam(value = "firstName", required = false) String firstName,
                          @RequestParam(value = "lastName", required = false) String lastName,
                          @RequestParam(value = "address", required = false) String address,
-                         Model model) throws IOException {
-        Customer findOne = customerService.findByFirstAndLastAndAddress(firstName, lastName, address);
-        if (findOne != null) {
+                         Model model) {
+
+
+        // Gets the session or creates if there is none with (true)
+        HttpSession session = request.getSession(true);
+
+        Customer findCustomer = customerService.findByFirstAndLastAndAddress(firstName, lastName, address);
+
+        if (findCustomer != null) {
+            session.setAttribute("customerSession", findCustomer);
+            System.out.println("Session name:" + session.getAttribute("customerSession"));
             return "redirect:/home";
         }
         return "login";
     }
+
+    @RequestMapping(value = {"/logout"}, method = RequestMethod.GET)
+    public String logout(HttpSession session,
+                         HttpServletRequest request,
+                         HttpServletResponse response,
+                         Model model) throws IOException {
+        Customer currentSession = (Customer) session.getAttribute("customerSession");
+        if (currentSession != null) {
+            System.out.println("Current session:" + "\n" + currentSession.toString());
+            System.out.println("Deleting session");
+            session.invalidate();
+        }
+        return "/login";
+    }
+
+
 
     @RequestMapping(value = {"/coffee"}, method = RequestMethod.GET)
     public String coffeeProducts(HttpServletResponse response, HttpServletRequest request, Model model) {
