@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,20 +17,35 @@
 </head>
 <body>
 <br/>
+
+
 <h4 class="header text-center">Registration</h4>
-
-
-<div class="container col-lg-3" align="center">
-    <form method="POST" action="/createAccount">
+<div class="container col-lg-3">
+    <form:form action="saveCustomer" method="POST" modelAttribute="customerToRegister">
+        <%--So SPring knows about the customer through its ID--%>
+        <form:hidden path="id"/>
         <div class="form-group">
-            <input type="text" class="form-control" name="fName" placeholder="First name"> <br/>
-            <input type="text" class="form-control" name="lName" placeholder="Last name"> <br/>
-            <input type="text" class="form-control" name="cAddress" placeholder="Address">
+            <label for="firstName">First name</label>
+            <form:input path="firstName" cssClass="form-control"/>
         </div>
-        <input type="submit" class="btn btn-sm btn-primary" value="Create">
-        <a onclick="window.location.href='/'" class="btn btn-sm btn-warning right-button">Back to login</a>
-    </form>
+        <div class="form-group">
+            <label fo="lastName">Last name</label>
+            <form:input path="lastName" cssClass="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <form:input path="address" cssClass="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <form:input path="password" cssClass="form-control"/>
+        </div>
+        <input type="submit" class="btn btn-sm btn-outline-primary" value="Register"/>
+        <input type="button" class="btn btn-sm btn-outline-dark" value="Back to login"
+               onclick="window.location.href='/login'"/>
+    </form:form>
 </div>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
       integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
       crossorigin="anonymous">

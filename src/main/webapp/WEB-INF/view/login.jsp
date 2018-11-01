@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"  session="false" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -15,43 +15,38 @@
 </head>
 <body style="background-color: ghostwhite">
 <br><br>
-
 <%--Imagen--%>
 <div class="container" align="center">
     <img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/randomFood.png"
          style="width: 120px; height: 120px;">
 </div>
-
 <%--
     Login form: llama al Controller; invoka el URL: /home y hace el metodo post.
-
 --%>
-<form action="/login" method="GET" class="container col-lg-4" >
+<%-- ModelAttribute will bind the input data to the model: "incomingCustomer" that is the controller in the method
+   login(). --%>
+<form:form action="login" modelAttribute="incomingCustomer" method="POST" cssClass="container col-lg-4">
+    <%--So Spring knows about which customer through their IDs--%>
+    <form:hidden path="id"/>
     <div class="form-group">
         <label for="fName">First name</label>
-        <input type="text" name="firstName" class="form-control" id="fName">
+        <form:input path="firstName" cssClass="form-control" id="fName"/>
     </div>
 
     <div class="form-group">
         <label for="lName">Last name</label>
-        <input type="text" name="lastName" class="form-control" id="lName">
+        <form:input path="lastName" cssClass="form-control" id="lName"/>
     </div>
 
     <div class="form-group">
-        <label for="addrss">Address</label>
-        <input type="text" name="address" class="form-control" id="addrss">
+        <label for="password">Password</label>
+        <form:input path="password" cssClass="form-control" id="password"/>
     </div>
-    <input class="btn btn-sm btn-primary left-button" type="submit" value="Login">
-    <a href="/createAccount" class="btn btn-sm btn-warning right-button">Create an account</a>
-</form>
 
-
-
-
-
-
-
-
+    <input class="btn btn-sm btn-outline-primary  left-button" type="submit" value="Login"/>
+    <input onclick="window.location.href='/createAccount'"
+           class="btn btn-sm btn-warning right-button" type="button" value="Create account"/>
+</form:form>
 
 
 

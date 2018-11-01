@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
 <html>
 <head>
     <title>Sweets & Coffee</title>
@@ -53,19 +53,13 @@
             </thead>
             <tbody>
             <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <td></td>
             </tr>
             <tr>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
+                <td></td>
             </tr>
             <tr>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
+                <td></td>
             </tr>
             </tbody>
         </table>

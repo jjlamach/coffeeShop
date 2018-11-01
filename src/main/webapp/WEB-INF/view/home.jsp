@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
 <html>
 <head>
     <title>Sweets & Coffee</title>
@@ -51,8 +51,6 @@
     <span class=" text-right"> <em> Green Leaf</em></span>
 </div>
 <%--End of image --%>
-
-
 
 <!-- Footer -->
 <footer class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">

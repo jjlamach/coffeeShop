@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="a" uri="http://www.springframework.org/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -67,10 +69,12 @@ they resize when screen shrinks--%>
             </div>
             <footer class="card-footer">
                 <%--Create the link for adding a cold brew--%>
-                <input type="button" value="Add to cart" class="btn btn-sm btn-primary left-button"
-                onclick="window.location.href='shoppingcart'; return false"/>
+                <%--<input  type="button" value="Add to cart" class="btn btn-sm btn-primary left-button"--%>
+                <%--onclick="window.location.href='shoppingcart'; return false"/>--%>
 
-                <input type="button" value="Remove from cart" class="btn btn-sm btn-danger right-button"/>
+                <%--<input type="button" value="Remove from cart" class="btn btn-sm btn-danger right-button"/>--%>
+
+                <a href="/addCoffeeToCart">Add to </a>
                 <br/><br/>
                 <strong>Price:</strong> $1.50
             </footer>

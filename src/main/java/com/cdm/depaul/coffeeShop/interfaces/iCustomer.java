@@ -17,7 +17,11 @@ public interface iCustomer {
 
     void setAllOrders (List<Order> orderList);
 
+    void setPassword (String password);
+
     String getFirstName ();
+
+    String getPassword();
 
     String getLastName ();
 

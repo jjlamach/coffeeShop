@@ -10,10 +10,11 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository < Customer, Long> {
-    // Native query as in the standard SQL language?
-    @Query(value = "SELECT * FROM customer c where c.first_name =:firstName and c.last_name =:lastName and c.address =:address",
-            nativeQuery = true)
-    Optional <Customer> findByFirstNameAndLastNameAAndAddress(@Param("firstName") String firstName,
-                                                              @Param("lastName") String lastName,
-                                                              @Param("address") String address);
+  // Native query as in the standard SQL language?
+  @Query(value = "SELECT * FROM customer c where c.first_name =:firstName and c.last_name =:lastName and c.password =:password",
+    nativeQuery = true)
+  Optional <Customer> findByFirstNameAndLastNameAAndAddress(@Param("firstName") String firstName,
+                                                            @Param("lastName") String lastName,
+                                                            @Param("password") String password);
+
 }

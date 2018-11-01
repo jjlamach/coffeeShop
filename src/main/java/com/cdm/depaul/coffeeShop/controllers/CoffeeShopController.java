@@ -1,6 +1,7 @@
 package com.cdm.depaul.coffeeShop.controllers;
 
 import com.cdm.depaul.coffeeShop.entities.Customer;
+import com.cdm.depaul.coffeeShop.entities.Order;
 import com.cdm.depaul.coffeeShop.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -19,95 +20,150 @@ import java.io.IOException;
 @Scope("singleton")
 public class CoffeeShopController {
 
-    @Autowired
-    private CustomerService customerService;
+  @Autowired
+  private CustomerService customerService;
 
-    public CoffeeShopController() {}
+  public CoffeeShopController() {
 
-    @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
-    public String home (HttpServletRequest request, HttpServletResponse response, Model model) {
-        return "home";
-    }
+  }
 
-
-    @RequestMapping(value = {"/products"}, method = RequestMethod.GET)
-    public String products (HttpServletRequest request, HttpServletResponse response, Model model) {
-        return "products";
-    }
+  @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
+  public String home (HttpServletRequest request, HttpServletResponse response, Model model) {
+    return "home";
+  }
 
 
-    @RequestMapping(value = {"/shoppingcart"}, method = RequestMethod.GET)
-    public String addToShoppingCart(HttpServletRequest request, HttpServletResponse response, Model model) {
-        return "shopping";
-    }
-
-    /*
-        TODO: Save a session for each user that registers.
-        @CookieValue("cookieName") String cookieValue
-                     "cookieName" = cookie value.
-     */
-    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String login (HttpServletResponse response, HttpServletRequest request,
-                         @RequestParam(value = "firstName", required = false) String firstName,
-                         @RequestParam(value = "lastName", required = false) String lastName,
-                         @RequestParam(value = "address", required = false) String address,
-                         Model model) {
+  @RequestMapping(value = {"/products"}, method = RequestMethod.GET)
+  public String products (HttpServletRequest request, HttpServletResponse response, Model model) {
+    return "products";
+  }
 
 
-        // Gets the session or creates if there is none with (true)
-        HttpSession session = request.getSession(true);
-
-        Customer findCustomer = customerService.findByFirstAndLastAndAddress(firstName, lastName, address);
-
-        if (findCustomer != null) {
-            session.setAttribute("customerSession", findCustomer);
-            System.out.println("Session name:" + session.getAttribute("customerSession"));
-            return "redirect:/home";
-        }
-        return "login";
-    }
-
-    @RequestMapping(value = {"/logout"}, method = RequestMethod.GET)
-    public String logout(HttpSession session,
-                         HttpServletRequest request,
-                         HttpServletResponse response,
-                         Model model) throws IOException {
-        Customer currentSession = (Customer) session.getAttribute("customerSession");
-        if (currentSession != null) {
-            System.out.println("Current session:" + "\n" + currentSession.toString());
-            System.out.println("Deleting session");
-            session.invalidate();
-        }
-        return "/login";
-    }
-
-
-
-    @RequestMapping(value = {"/coffee"}, method = RequestMethod.GET)
-    public String coffeeProducts(HttpServletResponse response, HttpServletRequest request, Model model) {
-        return "coffeeProducts";
-    }
-
-    @RequestMapping(value = "/sweets", method = RequestMethod.GET)
-    public String sweetProducts (HttpServletResponse response, HttpServletRequest request, Model model) {
-        return "sweets";
-    }
-
-    @RequestMapping(value = {"/amenities"}, method = RequestMethod.GET)
-    public String amenities (HttpServletResponse response, HttpServletRequest resquest, Model model) {
-        return "amenities";
-    }
-
-    @RequestMapping(value = {"/createAccount"})
-    // not required when making the request: required = false
-    public String createAnAccount(HttpServletRequest request, HttpServletResponse response,
-                                  @RequestParam(value = "fName", required = false) String firstName,
-                                  @RequestParam(value = "lName", required = false) String lastName,
-                                  @RequestParam(value = "cAddress", required = false) String cAddress,
+  @RequestMapping(value = {"/shoppingcart"}, method = RequestMethod.GET)
+  public String addToShoppingCart(HttpSession session,
+                                  HttpServletRequest request,
+                                  HttpServletResponse response,
                                   Model model) {
-        Customer customer = new Customer(firstName, lastName, cAddress);
-        customerService.saveCustomer(customer);
-        return "createAccount";
-    }
 
+//         get the current customer in this session.
+    Customer customer = (Customer) session.getAttribute("customerSession");
+
+    // find it in the database.
+    Customer findCustomer = customerService.findCustomerById(customer.getId());
+
+    Order order = new Order();
+    order.setName("Coffee");
+    order.setDescription("Regular coffee");
+    order.setPrice(1.50);
+    order.setCustomer(findCustomer);
+    findCustomer.addOrder(order);
+
+    customerService.saveCustomer(findCustomer);
+    return "shopping";
+  }
+
+  /*
+      @CookieValue("cookieName") String cookieValue
+                   "cookieName" = cookie value.
+   */
+  @RequestMapping(value = {"/login"})
+  public String login (HttpSession session, HttpServletResponse response, HttpServletRequest request,
+                       Model model) {
+
+    // supposed to be binded to the login.jsp
+    Customer customer = new Customer();
+
+    model.addAttribute("incomingCustomer", customer);
+
+
+
+//    String firstName = request.getParameter("firstName");
+//    String lastName = request.getParameter("lastName");
+//    String password = request.getParameter("password");
+//
+//    if (firstName == null && lastName == null && password == null) {
+//      System.out.println("Enter inputs");
+//    } else {
+//      if (customerService.findByFirstAndLastAndPassword(firstName, lastName, password) != null) {
+//        return "redirect:/home";
+//      }
+//    }
+    return "login";
+  }
+
+  @RequestMapping(value = {"/logout"}, method = RequestMethod.GET)
+  public String logout(HttpSession session,
+                       HttpServletRequest request,
+                       HttpServletResponse response,
+                       Model model) throws IOException {
+    Customer currentSession = (Customer) session.getAttribute("customerSession");
+    boolean wasDeleted = false;
+    if (currentSession != null) {
+      System.out.println("Current session:" + "\n" + currentSession.toString());
+      System.out.println("Deleting session");
+      wasDeleted = true;
+      System.out.println("Deleted session?, " + wasDeleted);
+      session.invalidate();
+    }
+    return "redirect:/login";
+  }
+
+
+
+  @RequestMapping(value = {"/coffee"}, method = RequestMethod.GET)
+  public String coffeeProducts(HttpSession session, HttpServletResponse response,
+                               HttpServletRequest request,
+                               Model model) {
+    return "coffeeProducts";
+  }
+
+  /*
+  Link to update a customer with an order.
+ */
+  @PostMapping(value = "/addCoffeeToCart")
+  public void addCoffee(){
+    System.out.println("/addCoffeeToCart was called");
+  }
+
+
+
+
+  @RequestMapping(value = "/sweets", method = RequestMethod.GET)
+  public String sweetProducts (HttpSession session,
+                               HttpServletResponse response,
+                               HttpServletRequest request,
+                               Model model) {
+    return "sweets";
+  }
+
+
+
+  @RequestMapping(value = {"/amenities"}, method = RequestMethod.GET)
+  public String amenities (HttpSession session,
+                           HttpServletResponse response,
+                           HttpServletRequest request,
+                           Model model) {
+    return "amenities";
+  }
+
+
+  @RequestMapping(value = "/createAccount")
+  public String createAnAccount(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+                                Model model) {
+    Customer theCustomer = new Customer();
+    model.addAttribute("customerToRegister", theCustomer);
+    return "createAccount";
+  }
+
+
+
+  /* This is the mapping for saving a customer to the database.
+   *  The controller will call this function when you use this path: "/saveCustomer" . */
+  @PostMapping(value = "/saveCustomer")
+  public String saveCustomer (@ModelAttribute(name = "customerToRegister")
+                                Customer theCustomer) {
+    customerService.saveCustomer(theCustomer);
+    /* after calling this method redirect to: /createAccount */
+    return "redirect:/createAccount";
+  }
 }

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import javax.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +33,6 @@ public class CoffeeShopApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        
+
     }
 }
