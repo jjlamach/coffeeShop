@@ -5,7 +5,6 @@ import com.cdm.depaul.coffeeShop.repositories.CustomerRepository;
 import com.cdm.depaul.coffeeShop.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +64,15 @@ public class CustomerService {
   public Customer findByFirstAndLastAndPassword(String firstName, String lastName, String address) {
     Optional <Customer> result = customerRepository.findByFirstNameAndLastNameAAndAddress(firstName, lastName, address);
     return optionalToCustomer(result);
+  }
+
+  /**
+   * This JPA function finds and updates a Customer.
+   * @param id
+   * @return
+   */
+  public Customer getOneCustomer (long id) {
+    return customerRepository.getOne(id);
   }
 
 

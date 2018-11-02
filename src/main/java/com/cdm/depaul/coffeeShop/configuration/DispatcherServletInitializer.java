@@ -1,7 +1,11 @@
 package com.cdm.depaul.coffeeShop.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-//https://docs.spring.io/spring-framework/docs/5.0.9.RELEASE/javadoc-api/org/springframework/web/WebApplicationInitializer.html?is-external=true
+
+/**
+ * https://docs.spring.io/spring-framework/docs/5.0.9.RELEASE/javadoc-api/org/springframework/web/WebApplicationInitializer.html?is-external=true
+ * This is the servlet.xml file in Java.
+ */
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
   @Override

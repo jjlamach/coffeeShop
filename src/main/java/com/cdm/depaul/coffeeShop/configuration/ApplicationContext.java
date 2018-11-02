@@ -6,10 +6,6 @@ import com.cdm.depaul.coffeeShop.services.CustomerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -27,7 +23,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @Configuration
 @EnableWebMvc
-//@EnableWebSecurity
 @ComponentScan(basePackages = { "com.cdm.depaul.coffeeShop" })
 public class ApplicationContext implements WebMvcConfigurer {
 
@@ -55,27 +50,6 @@ public class ApplicationContext implements WebMvcConfigurer {
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addRedirectViewController("/", "login");
   }
-
-//    /*
-//        Sets which paths must be secure and which should not
-//     */
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests().antMatchers("/", "/home").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//    }
-//
-//    @Override
-//    public UserDetailsService userDetailsServiceBean() throws Exception {
-//        return super.userDetailsServiceBean();
-//    }
 
 
   @Bean

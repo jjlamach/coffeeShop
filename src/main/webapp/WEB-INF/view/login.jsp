@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  session="false" %>
 <html>
 <head>
@@ -20,33 +21,46 @@
     <img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/randomFood.png"
          style="width: 120px; height: 120px;">
 </div>
-<%--
-    Login form: llama al Controller; invoka el URL: /home y hace el metodo post.
---%>
-<%-- ModelAttribute will bind the input data to the model: "incomingCustomer" that is the controller in the method
-   login(). --%>
-<form:form action="login" modelAttribute="incomingCustomer" method="POST" cssClass="container col-lg-4">
-    <%--So Spring knows about which customer through their IDs--%>
-    <form:hidden path="id"/>
-    <div class="form-group">
-        <label for="fName">First name</label>
-        <form:input path="firstName" cssClass="form-control" id="fName"/>
-    </div>
+
+<%-- When this form is submmited the setters of the Spring Bean will be called and will be filled with the
+input values. --%>
+<form:form action="${pageContext.request.contextPath}/authenticateUser"
+           method="POST"
+           cssClass="container col-lg-4">
+    <%--
+        Spring appends (?) a parameter named "error" if the credentials entered are wrong.
+        We can add our own error-message when this parameter exists in our URL.
+    --%>
+    <c:if test="${param.error != null}">
+        <i style="color:red">
+            Sorry, bad credentials! <br/>
+            Wrong username or password
+        </i>
+    </c:if>
+
+    <c:if test="${param.logout != null}">
+        <i style="color: darkgreen">
+            You've been logged out!
+        </i>
+    </c:if>
+
+
 
     <div class="form-group">
-        <label for="lName">Last name</label>
-        <form:input path="lastName" cssClass="form-control" id="lName"/>
+        <label for="userName">Username</label>
+            <%-- Spring expects the name to be "username" --%>
+        <input type="text" name="username" id="userName" class="form-control"/>
     </div>
-
     <div class="form-group">
-        <label for="password">Password</label>
-        <form:input path="password" cssClass="form-control" id="password"/>
+        <label for="passWord">Password</label>
+            <%-- Spring expects the name to be "password" --%>
+        <input type="password" name="password" id="passWord" class="form-control"/>
     </div>
-
-    <input class="btn btn-sm btn-outline-primary  left-button" type="submit" value="Login"/>
-    <input onclick="window.location.href='/createAccount'"
-           class="btn btn-sm btn-warning right-button" type="button" value="Create account"/>
+    <input type="submit" value="Log in" class="btn btn-sm btn-outline-primary"/>
+    <input type="button" value="Create account" class="btn btn-sm btn-outline-danger"
+           onclick="window.location.href='/registration'"/>
 </form:form>
+
 
 
 

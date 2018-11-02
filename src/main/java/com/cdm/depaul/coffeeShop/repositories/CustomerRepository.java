@@ -17,4 +17,6 @@ public interface CustomerRepository extends JpaRepository < Customer, Long> {
                                                             @Param("lastName") String lastName,
                                                             @Param("password") String password);
 
+  @Override
+  Customer getOne(Long aLong);
 }

@@ -137,17 +137,4 @@ public class Customer implements iCustomer, Serializable {
   public int hashCode() {
     return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getPassword(), orderList);
   }
-
-  @Override
-  public String toString() {
-    final StringBuffer sb = new StringBuffer("Customer{");
-    sb.append("id=").append(id);
-    sb.append(", firstName='").append(firstName).append('\'');
-    sb.append(", lastName='").append(lastName).append('\'');
-    sb.append(", address='").append(address).append('\'');
-    sb.append(", password='").append(password).append('\'');
-    sb.append(", orderList=").append(orderList);
-    sb.append('}');
-    return sb.toString();
-  }
 }

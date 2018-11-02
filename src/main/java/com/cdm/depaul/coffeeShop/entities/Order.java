@@ -114,16 +114,4 @@ public class Order implements iOrder, Serializable {
     return Objects.hash(getId(), orderName, getDescription(), getPrice(), getCustomer());
   }
 
-
-  @Override
-  public String toString() {
-    final StringBuffer sb = new StringBuffer("Order: {");
-    sb.append("id=").append(id);
-    sb.append(", orderName='").append(orderName).append('\'');
-    sb.append(", description='").append(description).append('\'');
-    sb.append(", price=").append(price);
-    sb.append(", customer=").append(customer);
-    sb.append('}');
-    return sb.toString();
-  }
 }

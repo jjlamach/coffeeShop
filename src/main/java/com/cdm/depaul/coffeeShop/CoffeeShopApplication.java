@@ -1,18 +1,14 @@
 package com.cdm.depaul.coffeeShop;
 
 import com.cdm.depaul.coffeeShop.entities.Customer;
-import com.cdm.depaul.coffeeShop.entities.Order;
 import com.cdm.depaul.coffeeShop.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import javax.servlet.http.HttpSession;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -33,6 +29,7 @@ public class CoffeeShopApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+      Customer customer = customerService.getOneCustomer(1L);
+      System.out.println(customer.getId());
     }
 }

@@ -21,9 +21,7 @@
 
 <h4 class="header text-center">Registration</h4>
 <div class="container col-lg-3">
-    <form:form action="saveCustomer" method="POST" modelAttribute="customerToRegister">
-        <%--So SPring knows about the customer through its ID--%>
-        <form:hidden path="id"/>
+    <form:form action="registerCustomer" method="POST" modelAttribute="customer">
         <div class="form-group">
             <label for="firstName">First name</label>
             <form:input path="firstName" cssClass="form-control"/>
@@ -38,11 +36,12 @@
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <form:input path="password" cssClass="form-control"/>
+            <form:password path="password" showPassword="false" cssClass="form-control"/>
         </div>
-        <input type="submit" class="btn btn-sm btn-outline-primary" value="Register"/>
-        <input type="button" class="btn btn-sm btn-outline-dark" value="Back to login"
-               onclick="window.location.href='/login'"/>
+        <%-- To submit the form. --%>
+        <input type="submit" class="btn btn-sm btn-outline-success" value="Register"/>
+        <input type="button" class="btn btn-sm btn-outline-danger" value="Back to log in"
+        onclick="window.location.href='/login'"/>
     </form:form>
 </div>
 

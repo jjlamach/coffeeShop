@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
 <html>
 <head>
@@ -35,7 +36,10 @@
         <%--Lol... Use another Navbar.--%>
         <div class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/logout">Sign Out</a>
+                <%--<a class="nav-link" href="/logout">Sign Out</a>--%>
+                <form:form action="${pageContext.request.contextPath}/logout" method="POST">
+                    <input class="btn btn-sm btn-outline-info" type="submit" value="Sign Out"/>
+                </form:form>
             </li>
         </div>
     </div>
@@ -59,7 +63,7 @@
         <span class="text-muted">
             By Julio Lama
             -- SE 352
-            ${sessionScope.get("customerSession")};
+            Hi, <strong>${customer.firstName}${customer.lastName}</strong>
         </span>
     </div>
     <%--End of Copyright stuff--%>
