@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  session="false" %>
 <html>
 <head>
@@ -18,8 +18,9 @@
 <br><br>
 <%--Imagen--%>
 <div class="container" align="center">
-    <img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/randomFood.png"
-         style="width: 120px; height: 120px;">
+    <%--<img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/randomFood.png"--%>
+         <%--style="width: 120px; height: 120px;">--%>
+    <img src="<c:url value="/resources/images/randomFood.png"/>" style="width: 120px; height: 120px;">
 </div>
 
 <%-- When this form is submmited the setters of the Spring Bean will be called and will be filled with the

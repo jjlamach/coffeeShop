@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
+<%@ page  contentType="text/html;charset=UTF-8" language="java" session="false" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Sweets & Coffee</title>
@@ -48,27 +49,32 @@
 <br/>
 <br/>
 
+<div class="container">
+    <em>
+        Hi, <security:authentication property="principal.username"/>!<br/>
+        <%--<security:authentication property="principal.authorities"/>--%>
+    </em>
+</div>
+
 <%--Image--%>
 <div class="card rounded-circle" style="width: 30rem; background-color: saddlebrown">
     <img class="card-img-top rounded" src= "${pageContext.request.contextPath}/resources/images/greenLeaf.png"
          alt="Green Leaf">
-    <span class=" text-right"> <em> Green Leaf</em></span>
+    <span class=" text-right">
+    </span>
 </div>
 <%--End of image --%>
 
 <!-- Footer -->
 <footer class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
-    <%--Copyright stuff--%>
-    <div class="text-center py-3">
-        <span class="text-muted">
-            By Julio Lama
-            -- SE 352
-            Hi, <strong>${customer.firstName}${customer.lastName}</strong>
-        </span>
-    </div>
-    <%--End of Copyright stuff--%>
+        <div class="py-2">
+            <span class="text-muted">
+                <strong>By:</strong> Julio Lama | <strong>Course:</strong> SE 352
+            </span>
+        </div>
 </footer>
 <!-- Footer -->
+
 
 <%--Bootstrap--%>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"

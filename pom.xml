@@ -61,6 +61,19 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!--
+            Spring Security JSP tag library
+            Spring Security has its own taglib which provides basic support for accessing security information
+            and applying security constraints in JSPs.
+        -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>

@@ -1,5 +1,6 @@
 package com.cdm.depaul.coffeeShop.configuration;
 
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,6 +34,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
+
+      /* Tell Spring to a user to see the static resources too.
+      * If this is not specified everything breaks... */
+      .antMatchers("/webjars/**").permitAll()
+      .antMatchers("/resources/**").permitAll()
 
       /* Allow any request to access this path */
       .antMatchers("/registration").permitAll()
