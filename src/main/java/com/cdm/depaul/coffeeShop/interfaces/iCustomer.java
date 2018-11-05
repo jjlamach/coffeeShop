@@ -5,33 +5,37 @@ import com.cdm.depaul.coffeeShop.entities.Order;
 import java.util.List;
 
 public interface iCustomer {
-    void setFirstName (String firstName);
+  void setFirstName (String firstName);
 
-    void setLastName (String lastName);
+  void setLastName (String lastName);
 
-    void setAddress (String address);
+  void setAddress (String address);
 
-    void addOrder (Order order);
+  void addOrder (Order order);
 
-    void setCustomerId (Long customerId);
+  void setCustomerId (Long customerId);
 
-    void setAllOrders (List<Order> orderList);
+  void setAllOrders (List<Order> orderList);
 
-    void setPassword (String password);
+  void setPassword (String password);
 
-    String getFirstName ();
+  void setUsername(String username);
 
-    String getPassword();
+  String getFirstName ();
 
-    String getLastName ();
+  String getPassword();
 
-    String getAddress();
+  String getLastName ();
 
-    Long getId ();
+  String getAddress();
 
-    List <Order> getAllOrders ();
+  String getUsername();
 
-    int hashCode();
+  Long getId ();
 
-    String toString ();
+  List <Order> getAllOrders ();
+
+  int hashCode();
+
+  String toString ();
 }

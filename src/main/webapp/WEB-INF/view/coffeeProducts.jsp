@@ -69,14 +69,22 @@ they resize when screen shrinks--%>
                 </p>
             </div>
             <footer class="card-footer">
-                <input type="button" onclick="location.href='/addCoffeeToCart'" value="Add to cart"/>
-                <input type="button" onclick="location.href='/removeFromCart'" value="Remove from cart"/>
-                <br/><br/>
+                <%--Added the CSS class of button to the form element since it is wrapping the submit input --%>
+                <form:form action="${pageContext.request.contextPath}/addCoffeeToCart" method="POST"
+                           cssClass="btn btn-sm btn-primary lef-button">
+                    <input style="background: transparent; border: none; color:white" type="submit" value="Add to cart"/>
+                </form:form>
+                <form:form action="${pageContext.request.contextPath}/removeFromCart" method="POST"
+                           cssClass="btn btn-sm btn-danger right-button">
+                    <input style="background: transparent; border: none; color: white" type="submit" value="Remove from cart"/>
+                </form:form>
+
+                <br/>
+                <br/>
                 <strong>Price:</strong> $1.50
             </footer>
         </div>
         <br/>
-
 
         <div class="card">
             <h6 class="card-header">

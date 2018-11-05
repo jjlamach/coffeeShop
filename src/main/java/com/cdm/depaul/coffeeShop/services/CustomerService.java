@@ -5,6 +5,7 @@ import com.cdm.depaul.coffeeShop.repositories.CustomerRepository;
 import com.cdm.depaul.coffeeShop.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +25,22 @@ public class CustomerService {
   @Autowired
   private OrderRepository orderRepository;
 
-  public CustomerService () { }
+
+//  @Autowired
+//  private BCryptPasswordEncoder passwordEncoder;
+
+  public CustomerService() {}
+
+  public CustomerService (CustomerRepository customerRepository, OrderRepository orderRepository) {
+    this.customerRepository = customerRepository;
+    this.orderRepository = orderRepository;
+//    this.passwordEncoder = encoder;
+  }
 
 
   public void saveCustomer (Customer customer) {
+//    String encryptedPassword = passwordEncoder.encode(customer.getPassword());
+//    customer.setPassword(encryptedPassword);
     customerRepository.save(customer);
   }
 
@@ -51,16 +64,7 @@ public class CustomerService {
     System.out.println("Destroying Spring Bean: CustomerService");
   }
 
-
-  /*
-      Need to find it and then edit it.
-   */
-  public Customer findCustomerById (Long customerId) {
-    Optional <Customer> findOne = customerRepository.findById(customerId);
-    return optionalToCustomer(findOne);
-  }
-
-
+  // eh???
   public Customer findByFirstAndLastAndPassword(String firstName, String lastName, String address) {
     Optional <Customer> result = customerRepository.findByFirstNameAndLastNameAAndAddress(firstName, lastName, address);
     return optionalToCustomer(result);
@@ -74,6 +78,17 @@ public class CustomerService {
   public Customer getOneCustomer (long id) {
     return customerRepository.getOne(id);
   }
+
+  /**
+   *
+   * @param username
+   * @return a Customer
+   */
+  public Customer getOneCustomerByUsername (String username) {
+    Optional<Customer> opCustomer = customerRepository.findCustomerByUsername(username);
+    return optionalToCustomer(opCustomer);
+  }
+
 
 
   /**
@@ -89,6 +104,8 @@ public class CustomerService {
       customer.setAddress(optionalCustomer.get().getAddress());
       customer.setCustomerId(optionalCustomer.get().getId());
       customer.setAllOrders(optionalCustomer.get().getAllOrders());
+      customer.setUsername(optionalCustomer.get().getUsername());
+      customer.setPassword(optionalCustomer.get().getPassword());
     }
     return customer;
   }

@@ -41,6 +41,12 @@ public class CoffeeShopController {
   }
 
 
+  @RequestMapping(value = {"/shopping"}, method = RequestMethod.GET)
+  public String shopping () {
+    return "shopping";
+  }
+
+
   @RequestMapping(value = {"/products"}, method = RequestMethod.GET)
   public String products (HttpServletRequest request, HttpServletResponse response, Model model) {
     return "products";
@@ -52,6 +58,10 @@ public class CoffeeShopController {
                                   HttpServletRequest request,
                                   HttpServletResponse response,
                                   Model model) {
+
+    Order order = new Order();
+    model.addAttribute("coffee", order);
+
     return "shopping";
   }
 
@@ -76,36 +86,46 @@ public class CoffeeShopController {
   /*
     TODO: How do we identify which customer purchased which thing???
    */
-  @RequestMapping(value = "/addCoffeeToCart", method = RequestMethod.GET)
-  public String addCoffee(Model model) {
-//   Customer customer = new Customer();
-//   Order order = new Order();
-//    customer = customerService.getOneCustomer(8L);
-//    order.setName("Coffee");
-//    order.setPrice(1.50);
-//    order.setCustomer(customer);
-//    order.setDescription("Small coffee");
-//    order.setCustomer(customer);
-//    customer.addOrder(order);
-//    customerService.saveCustomer(customer);
-    return "shopping";
+  @RequestMapping(value = "/addCoffeeToCart", method = RequestMethod.POST)
+  public String addCoffee(@ModelAttribute("coffee") Order coffee) {
+
+    Customer customer = customerService.getOneCustomer(1L);
+
+    coffee.setCustomer(customer);
+    coffee.setDescription("Small coffee");
+    coffee.setPrice(1.50);
+    coffee.setName("Coffee");
+
+
+    customer.addOrder(coffee);
+
+
+    customerService.saveCustomer(customer);
+
+    return "redirect:/shopping";
   }
 
-  @RequestMapping(value = "/removeFromCart", method = RequestMethod.GET)
+  /*
+    I believe that you remove whatever is on
+   */
+  @RequestMapping(value = "/removeFromCart", method = RequestMethod.POST)
   public String removeFromCart(Model model) {
-    List<Order> orderList = customerService.getOneCustomer(8L).getAllOrders();
-    int size = orderList.size();
-    for (int i = 0; i <= size; i++) {
-      orderService.deleteOrderById(orderList.get(i).getId());
-    }
-    return "shopping";
+    Customer customer = customerService.getOneCustomer(1L);
+    List <Order> orderList = customer.getAllOrders();
+
+    orderService.deleteOrderById(orderList.get(orderList.size() - 1).getId());
+
+
+    return "redirect:/shopping";
   }
 
 
 
 
   @RequestMapping(value = "/shoppingCart", method = RequestMethod.GET)
-  public String shoppingCart() {
+  public String shoppingCart(Model model) {
+    Order coffee_order = new Order();
+    model.addAttribute("coffee", coffee_order);
     return "shopping";
   }
 

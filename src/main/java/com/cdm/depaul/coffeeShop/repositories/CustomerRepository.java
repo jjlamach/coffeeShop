@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,4 +20,9 @@ public interface CustomerRepository extends JpaRepository < Customer, Long> {
 
   @Override
   Customer getOne(Long aLong);
+
+
+  @Query(value = "SELECT * FROM customer c where c.username =:username", nativeQuery = true)
+  Optional<Customer> findCustomerByUsername(@Param("username") String username);
+
 }

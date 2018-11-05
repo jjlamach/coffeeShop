@@ -1,6 +1,7 @@
 package com.cdm.depaul.coffeeShop.entities;
 
 import com.cdm.depaul.coffeeShop.interfaces.iOrder;
+import org.hibernate.annotations.Cascade;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +40,13 @@ public class Order implements iOrder, Serializable {
   @Column
   private double price;
 
-  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  /*
+    Many Orders mapped to one Customer.
+    Don't apply Cascade on deletes! D: it will delete the customer too.
+   */
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH},
+    fetch = FetchType.EAGER)
+  /* Will map an Order to a Customer in a table. Foreign Key? */
   @JoinColumn(name = "customer_id")
   private Customer customer;
 

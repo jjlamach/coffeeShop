@@ -1,6 +1,8 @@
 package com.cdm.depaul.coffeeShop.entities;
 
 import com.cdm.depaul.coffeeShop.interfaces.iCustomer;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +25,9 @@ public class Customer implements iCustomer, Serializable {
 
   private static final long serialVersionUID = 870052873754135183L;
 
-
+  /*
+    Primary Key of the Customer table.
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "customer_id")
@@ -41,17 +45,31 @@ public class Customer implements iCustomer, Serializable {
   @Column
   private String password;
 
+  @Column
+  private String username;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.EAGER)
+
+  /**
+   * FetchType.EAGER: load everything.
+   * mappedBy: refers to the Customer field that is on the Order class.
+   *          Tells Hibernate how to map this table with the other table by using the information
+   *          that is at @joinColumn.
+   * Link: https://stackoverflow.com/questions/16898085/jpa-hibernate-remove-entity-sometimes-not-working
+   */
+  // NOTE: Do not do cascade deletes! D:! It would delete the order if you delete a customer.
+  @OneToMany( orphanRemoval = true, mappedBy = "customer")
   private List<Order> orderList = new ArrayList<Order>();
+
+
 
   public Customer() { }
 
-  public Customer (String firstName, String lastName, String address, String password) {
+  public Customer (String firstName, String lastName, String address, String password, String username) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.address = address;
     this.password = password;
+    this.username = username;
   }
 
   @Override
@@ -91,6 +109,11 @@ public class Customer implements iCustomer, Serializable {
   }
 
   @Override
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  @Override
   public String getFirstName() {
     return firstName;
   }
@@ -108,6 +131,11 @@ public class Customer implements iCustomer, Serializable {
   @Override
   public String getAddress() {
     return address;
+  }
+
+  @Override
+  public String getUsername() {
+    return username;
   }
 
   @Override
@@ -130,11 +158,12 @@ public class Customer implements iCustomer, Serializable {
       Objects.equals(getLastName(), customer.getLastName()) &&
       Objects.equals(getAddress(), customer.getAddress()) &&
       Objects.equals(getPassword(), customer.getPassword()) &&
+      Objects.equals(getUsername(), customer.getUsername()) &&
       Objects.equals(orderList, customer.orderList);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getPassword(), orderList);
+    return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getPassword(), getUsername(), orderList);
   }
 }

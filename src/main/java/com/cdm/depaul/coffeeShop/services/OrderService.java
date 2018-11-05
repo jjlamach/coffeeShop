@@ -34,4 +34,8 @@ public class OrderService {
   public Order getOneOrder(long id) {
     return orderRepository.getOne(id);
   }
+
+  public void deleteAll() {
+    orderRepository.deleteAll();
+  }
 }

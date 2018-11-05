@@ -67,11 +67,11 @@
 
 <!-- Footer -->
 <footer class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
-        <div class="py-2">
+    <div class="py-2">
             <span class="text-muted">
                 <strong>By:</strong> Julio Lama | <strong>Course:</strong> SE 352
             </span>
-        </div>
+    </div>
 </footer>
 <!-- Footer -->
 

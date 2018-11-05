@@ -53,13 +53,11 @@
             </thead>
             <tbody>
             <tr>
-                <td>${order.name}</td>
+                ${coffee.name}
             </tr>
+
             <tr>
-                <td>${customer.allOrders.size()}</td>
-            </tr>
-            <tr>
-                <td>${order.price}</td>
+                ${coffee.price}
             </tr>
             </tbody>
         </table>

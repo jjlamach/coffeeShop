@@ -55,22 +55,22 @@
             <artifactId>spring-boot-starter-integration</artifactId>
         </dependency>
 
-        <!-- For Spring Security -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+        <!--&lt;!&ndash; For Spring Security &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-security</artifactId>-->
+        <!--</dependency>-->
 
-        <!--
-            Spring Security JSP tag library
-            Spring Security has its own taglib which provides basic support for accessing security information
-            and applying security constraints in JSPs.
-        -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-taglibs</artifactId>
-            <version>${spring-security.version}</version>
-        </dependency>
+        <!--&lt;!&ndash;-->
+            <!--Spring Security JSP tag library-->
+            <!--Spring Security has its own taglib which provides basic support for accessing security information-->
+            <!--and applying security constraints in JSPs.-->
+        <!--&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-taglibs</artifactId>-->
+            <!--<version>${spring-security.version}</version>-->
+        <!--</dependency>-->
 
 
 
