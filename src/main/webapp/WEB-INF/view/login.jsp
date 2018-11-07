@@ -25,37 +25,37 @@
 
 <%-- When this form is submmited the setters of the Spring Bean will be called and will be filled with the
 input values. --%>
-<form:form action="${pageContext.request.contextPath}/authenticateUser"
-           method="POST"
-           cssClass="container col-lg-4">
+<form:form action="/authenticateUser" method="POST" cssClass="container col-lg-4" modelAttribute="verifyIncomingCustomer">
     <%--
         Spring appends (?) a parameter named "error" if the credentials entered are wrong.
         We can add our own error-message when this parameter exists in our URL.
-    --%>
-    <c:if test="${param.error != null}">
-        <i style="color:red">
-            Sorry, bad credentials! <br/>
-            Wrong username or password
-        </i>
-    </c:if>
+    <%--&ndash;%&gt;--%>
+    <%--<c:if test="${param.error != null}">--%>
+        <%--<i style="color:red">--%>
+            <%--Sorry, bad credentials! <br/>--%>
+            <%--Wrong username or password--%>
+        <%--</i>--%>
+    <%--</c:if>--%>
 
-    <c:if test="${param.logout != null}">
-        <i style="color: darkgreen">
-            You've been logged out!
-        </i>
-    </c:if>
+    <%--<c:if test="${param.logout != null}">--%>
+        <%--<i style="color: darkgreen">--%>
+            <%--You've been logged out!--%>
+        <%--</i>--%>
+    <%--</c:if>--%>
 
 
 
     <div class="form-group">
         <label for="userName">Username</label>
             <%-- Spring expects the name to be "username" --%>
-        <input type="text" name="username" id="userName" class="form-control"/>
+        <%--<input type="text" name="username" id="userName" class="form-control"/>--%>
+        <form:input path="username" cssClass="form-control" required="required"/>
     </div>
     <div class="form-group">
         <label for="passWord">Password</label>
             <%-- Spring expects the name to be "password" --%>
-        <input type="password" name="password" id="passWord" class="form-control"/>
+        <%--<input type="password" name="password" id="passWord" class="form-control"/>--%>
+        <form:password path="password" cssClass="form-control" required="required"/>
     </div>
     <input type="submit" value="Log in" class="btn btn-sm btn-outline-primary"/>
     <input type="button" value="Create account" class="btn btn-sm btn-outline-danger"

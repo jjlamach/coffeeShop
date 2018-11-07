@@ -21,36 +21,36 @@
 
 <h4 class="header text-center">Registration</h4>
 <div class="container col-lg-3">
-    <form:form action="/registerCustomer" method="POST" modelAttribute="customer">
+    <form:form action="/registerCustomer" method="POST" modelAttribute="incomingCustomer">
 
         <div class="form-group">
             <label for="firstName">First name</label>
-            <form:input path="firstName" cssClass="form-control"/>
+            <form:input path="firstName" cssClass="form-control" required="required"/>
         </div>
 
         <div class="form-group">
             <label fo="lastName">Last name</label>
-            <form:input path="lastName" cssClass="form-control"/>
+            <form:input path="lastName" cssClass="form-control" required="required"/>
         </div>
 
         <div class="form-group">
             <label for="address">Address</label>
-            <form:input path="address" cssClass="form-control"/>
+            <form:input path="address" cssClass="form-control" required="required"/>
         </div>
 
         <div class="form-group">
             <label for="username">Username</label>
-            <form:input path="username" cssClass="form-control"/>
+            <form:input path="username" cssClass="form-control" required="required"/>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <form:password path="password" showPassword="false" cssClass="form-control"/>
+            <form:password path="password" showPassword="false" cssClass="form-control" required="required"/>
         </div>
         <%-- To submit the form. --%>
         <input type="submit" class="btn btn-sm btn-outline-success" value="Register"/>
         <input type="button" class="btn btn-sm btn-outline-danger" value="Back to log in"
-        onclick="window.location.href='/login'"/>
+               onclick="window.location.href='/login'"/>
     </form:form>
 </div>
 

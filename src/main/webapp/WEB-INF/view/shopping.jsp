@@ -9,7 +9,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="${pageContext.request.contextPath}/home">
         <img src=${pageContext.request.contextPath}/resources/images/greenLeaf.png width="30" height="30" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#coffeeNavBarLinks" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,19 +18,19 @@
     <div class="collapse navbar-collapse" id="coffeeNavBarLinks">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/home">Home</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/home">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/products">Products</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/products">Products</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/shoppingcart">Shopping Cart</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/shoppingCart">Shopping Cart</a>
             </li>
         </ul>
         <%--Lol... Use another Navbar.--%>
         <div class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Sign Out</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/logout">Sign Out</a>
             </li>
         </div>
     </div>
@@ -42,6 +42,7 @@
     <img class="img-thumbnail" src="${pageContext.request.contextPath}/resources/images/shoppingCart.png"
          style="width: 350px; height: 350px; border-width: thick; border-color: cadetblue ">
     <br/><br/>
+    <h2>Hi, ${customer.username}</h2>
     <div class="table-responsive">
         <table class="table table-hover table-striped table-bordered">
             <thead>
@@ -53,11 +54,12 @@
             </thead>
             <tbody>
             <tr>
-                ${coffee.name}
+                <%--<td>${}</td>--%>
+                <td>${customer.allOrders.size()}</td>
+                <%--<td>${}</td>--%>
             </tr>
-
             <tr>
-                ${coffee.price}
+
             </tr>
             </tbody>
         </table>

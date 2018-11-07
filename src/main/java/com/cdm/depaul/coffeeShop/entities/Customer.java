@@ -1,8 +1,6 @@
 package com.cdm.depaul.coffeeShop.entities;
 
 import com.cdm.depaul.coffeeShop.interfaces.iCustomer;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +17,9 @@ import java.util.Objects;
  */
 @Entity
 @Component
-@Scope("prototype")
+//@Scope("prototype")
+// To keep track of the Customer in the session
+@Scope("session")
 public class Customer implements iCustomer, Serializable {
 
 
@@ -54,15 +54,26 @@ public class Customer implements iCustomer, Serializable {
    * mappedBy: refers to the Customer field that is on the Order class.
    *          Tells Hibernate how to map this table with the other table by using the information
    *          that is at @joinColumn.
+   *
+   * orphanRemoval: removes a child(Order) without removing the parent (Customer)
+   * A Link why cascade = {value1...value2...} does not work and why just orphanRemoval works without the cascades.
    * Link: https://stackoverflow.com/questions/16898085/jpa-hibernate-remove-entity-sometimes-not-working
    */
   // NOTE: Do not do cascade deletes! D:! It would delete the order if you delete a customer.
-  @OneToMany( orphanRemoval = true, mappedBy = "customer")
-  private List<Order> orderList = new ArrayList<Order>();
+//  @OneToMany(cascade = {CascadeType.ALL},orphanRemoval = true, mappedBy = "customer",targetEntity = Order.class, fetch = FetchType.EAGER)
+
+
+  /**
+   * Customer -> many orders
+   */
+  @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+  private List<Order> orderList;
 
 
 
-  public Customer() { }
+  public Customer() {
+    this.orderList = new ArrayList<>();
+  }
 
   public Customer (String firstName, String lastName, String address, String password, String username) {
     this.firstName = firstName;
@@ -70,6 +81,7 @@ public class Customer implements iCustomer, Serializable {
     this.address = address;
     this.password = password;
     this.username = username;
+    this.orderList = new ArrayList<>();
   }
 
   @Override
@@ -89,7 +101,7 @@ public class Customer implements iCustomer, Serializable {
 
   @Override
   public void addOrder(Order order) {
-    orderList.add(order);
+    this.orderList.add(order);
   }
 
   // Just for mapping. Since Hibernate will give me a generated primary key.

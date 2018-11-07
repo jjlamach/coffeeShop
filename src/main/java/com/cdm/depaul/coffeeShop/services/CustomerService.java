@@ -34,13 +34,10 @@ public class CustomerService {
   public CustomerService (CustomerRepository customerRepository, OrderRepository orderRepository) {
     this.customerRepository = customerRepository;
     this.orderRepository = orderRepository;
-//    this.passwordEncoder = encoder;
   }
 
 
   public void saveCustomer (Customer customer) {
-//    String encryptedPassword = passwordEncoder.encode(customer.getPassword());
-//    customer.setPassword(encryptedPassword);
     customerRepository.save(customer);
   }
 

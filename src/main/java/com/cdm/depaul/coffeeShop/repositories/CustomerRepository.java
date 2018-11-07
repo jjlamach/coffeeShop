@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CustomerRepository extends JpaRepository < Customer, Long> {
   // Native query as in the standard SQL language?
-  @Query(value = "SELECT * FROM customer c where c.first_name =:firstName and c.last_name =:lastName and c.password =:password",
+  @Query(value = "SELECT * FROM customer c where c.first_name =:firstName and c.last_name =:lastName and c.password =:password LIMIT 1",
     nativeQuery = true)
   Optional <Customer> findByFirstNameAndLastNameAAndAddress(@Param("firstName") String firstName,
                                                             @Param("lastName") String lastName,
@@ -22,7 +22,7 @@ public interface CustomerRepository extends JpaRepository < Customer, Long> {
   Customer getOne(Long aLong);
 
 
-  @Query(value = "SELECT * FROM customer c where c.username =:username", nativeQuery = true)
+  @Query(value = "SELECT * FROM customer c where c.username =:username LIMIT 1", nativeQuery = true)
   Optional<Customer> findCustomerByUsername(@Param("username") String username);
 
 }

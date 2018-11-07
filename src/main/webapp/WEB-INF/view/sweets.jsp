@@ -18,13 +18,13 @@
     <div class="collapse navbar-collapse" id="coffeeNavBarLinks">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/home">Home</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/home">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/products">Products</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/products">Products</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/shoppingcart">Shopping Cart</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/shoppingCart">Shopping Cart</a>
             </li>
         </ul>
         <%--Lol... Use another Navbar.--%>
@@ -81,7 +81,7 @@
 </div>
 
 <%--Shopping cart as a navbar--%>
-<a class="navbar float-lg-right" href="/shoppingcart">
+<a class="navbar float-lg-right" href="${pageContext.request.contextPath}/shoppingCart">
     <div class="text-center">
         <i class="fa fa-shopping-cart fa-4x"></i>
     </div>

@@ -19,6 +19,7 @@ import java.util.Objects;
 @Table(name = "customer_order")
 @Component
 @Scope("prototype")
+//@Scope("session")
 public class Order implements iOrder, Serializable {
 
   private static final long serialVersionUID = 4876487231629720215L;
@@ -44,10 +45,12 @@ public class Order implements iOrder, Serializable {
     Many Orders mapped to one Customer.
     Don't apply Cascade on deletes! D: it will delete the customer too.
    */
-  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH},
-    fetch = FetchType.EAGER)
-  /* Will map an Order to a Customer in a table. Foreign Key? */
-  @JoinColumn(name = "customer_id")
+//  @ManyToOne( cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
+//  /* Will map an Order to a Customer in a table. Foreign Key? */
+//  @JoinColumn(name = "customer_id")
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "customer_id", nullable = false)
   private Customer customer;
 
   public Order () { }
@@ -103,6 +106,7 @@ public class Order implements iOrder, Serializable {
     return customer;
   }
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -115,10 +119,8 @@ public class Order implements iOrder, Serializable {
       Objects.equals(getCustomer(), order.getCustomer());
   }
 
-
   @Override
   public int hashCode() {
     return Objects.hash(getId(), orderName, getDescription(), getPrice(), getCustomer());
   }
-
 }

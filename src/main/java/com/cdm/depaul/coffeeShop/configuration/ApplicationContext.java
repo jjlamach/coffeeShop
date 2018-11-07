@@ -2,13 +2,10 @@ package com.cdm.depaul.coffeeShop.configuration;
 
 import com.cdm.depaul.coffeeShop.entities.Customer;
 import com.cdm.depaul.coffeeShop.entities.Order;
-//import com.cdm.depaul.coffeeShop.services.CustomerDetailService;
 import com.cdm.depaul.coffeeShop.services.CustomerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.jdbc.datasource.DriverManagerDataSource;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -43,26 +40,14 @@ public class ApplicationContext implements WebMvcConfigurer {
   public CustomerService customerService() {return new CustomerService(); }
 
 
-//  @Bean
-//  public CustomerDetailService customerDetailService () {return new CustomerDetailService();}
-
-
-
-
-  /* Spring security needs the password to be encrypted.*/
-//  @Bean
-//  public BCryptPasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
-
-
   /**
-   --- Redirects to any view when invoked ---
-   "Immediately forwards to a view when invoked."
-   I assume that since the DispatcherServlet is the first controller to be invoked "/" then
-   it will redirect to "home" view.
+   * Redirects to views based off of paths.
+   * @param registry
    */
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
-    registry.addRedirectViewController("/", "login");
+    registry.addRedirectViewController("/", "/login");
+    registry.addRedirectViewController("/registration", "/registration");
   }
 
 
@@ -75,7 +60,7 @@ public class ApplicationContext implements WebMvcConfigurer {
   }
 
   /**
-   * Tell Spring where to find the resources for the WebApp.
+   * Tell Spring where to find the resources for the web application.
    * If this is not overridden then it won't find the resources
    * @param resourceHandlerRegistry
    */
@@ -84,19 +69,4 @@ public class ApplicationContext implements WebMvcConfigurer {
       .addResourceLocations("/webjars/")
       .addResourceLocations("/resources/");
   }
-
-//
-//  /**
-//   * DataSource
-//   */
-//  @Bean
-//  public DriverManagerDataSource driverManagerDataSource () {
-//    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//    dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-//    dataSource.setUrl("jdbc:mysql://localhost:3306/coffeeShop_schema?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true");
-//    dataSource.setUsername("root");
-//    dataSource.setPassword("julio123");
-//    return dataSource;
-//  }
-
 }

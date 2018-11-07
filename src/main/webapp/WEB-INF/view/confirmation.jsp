@@ -20,8 +20,15 @@
         <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/greenLeaf.png"
              style="width: 250px; height: 250px;"/>
         <footer class="card-footer">
-            <h4 class="text-center"> Registered!</h4>
+            <h4 class="text-center"> Registration Complete</h4>
+            <p>
+                Hi, ${savedCustomer.firstName} ${savedCustomer.lastName} <br/>
+                <strong>Username:</strong> ${savedCustomer.username} <br/>
+                <strong>Password:</strong> ${savedCustomer.password}
+
+            </p>
         </footer>
+
         <input type="button" onclick="window.location.href='/login'" value="Back to login"
                class="btn btn-outline-success"/>
     </div>

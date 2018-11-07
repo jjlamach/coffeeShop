@@ -1,51 +1,38 @@
 //package com.cdm.depaul.coffeeShop.configuration;
 //
-//import com.cdm.depaul.coffeeShop.services.CustomerDetailService;
 //import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 //
-//import javax.sql.DataSource;
+//
 //
 //
 //@Configuration
 //@EnableWebSecurity
 //public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //
-////  @Autowired
-////  BCryptPasswordEncoder passwordEncoder;
-////
-////  @Autowired
-////  DataSource dataSource;
-////
-////  @Autowired
-////  CustomerDetailService customerDetailService;
 //
-//
-//
-//
-//
+//  @Autowired
+//  private AuthProvider authProvider;
 //
 //  @Override
 //  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//    PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//    auth.inMemoryAuthentication()
-//      .withUser("jlama").password(encoder.encode("julio123")).roles("ADMIN");
-//
-//    auth.inMemoryAuthentication()
-//      .withUser("jtaksas").password(encoder.encode("jtaksas123")).roles("EMPLOYEE");
-//
-//    auth.inMemoryAuthentication()
-//      .withUser("gvla").password(encoder.encode("gvla123")).roles("EMPLOYEE");
+////    PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+////    auth.inMemoryAuthentication()
+////      .withUser("jlama").password(encoder.encode("julio123")).roles("ADMIN");
+////
+////    auth.inMemoryAuthentication()
+////      .withUser("jtaksas").password(encoder.encode("jtaksas123")).roles("EMPLOYEE");
+////
+////    auth.inMemoryAuthentication()
+////      .withUser("gvla").password(encoder.encode("gvla123")).roles("EMPLOYEE");
 //
 ////    auth.userDetailsService(customerDetailService).passwordEncoder(passwordEncoder);
+//    auth.authenticationProvider(authProvider);
 //  }
 //
 //  /**
@@ -64,6 +51,7 @@
 //
 //      /* Allow any request to access this path */
 //      .antMatchers("/registration").permitAll()
+//      .antMatchers("/confirmation").permitAll()
 //
 //      /* Any request must be authenticated can see the rest of the views. */
 //      .anyRequest().authenticated()

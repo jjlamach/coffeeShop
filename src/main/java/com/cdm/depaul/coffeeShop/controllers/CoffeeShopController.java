@@ -10,11 +10,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Component
@@ -27,107 +30,133 @@ public class CoffeeShopController {
   @Autowired
   private OrderService orderService;
 
+  // The currentCustomer that is currently in the session
+  @Autowired
+  private Customer currentCustomer;
 
 
-  public CoffeeShopController() {
+  public CoffeeShopController() { }
 
-  }
-
+  /**
+   *
+   * @param model
+   * @return the home view
+   */
   @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
-  public String home (HttpServletRequest request,
-                      HttpServletResponse response,
-                      Model model) {
+  public String home(Model model) {
+    model.addAttribute("currentCustomer", this.currentCustomer);
     return "home";
   }
 
 
-  @RequestMapping(value = {"/shopping"}, method = RequestMethod.GET)
-  public String shopping () {
-    return "shopping";
-  }
-
-
   @RequestMapping(value = {"/products"}, method = RequestMethod.GET)
-  public String products (HttpServletRequest request, HttpServletResponse response, Model model) {
+  public String products(HttpServletRequest request, HttpServletResponse response, Model model) {
     return "products";
   }
 
 
-  @RequestMapping(value = {"/shoppingcart"}, method = RequestMethod.GET)
-  public String addToShoppingCart(HttpSession session,
-                                  HttpServletRequest request,
-                                  HttpServletResponse response,
-                                  Model model) {
+  /**
+   *
+   * @param customer
+   * @param redirectAttributes
+   * @return the login view or home.
+   */
+  @RequestMapping(value = {"/login", "/authenticateUser"}, method = {RequestMethod.GET, RequestMethod.POST})
+  public String login(@ModelAttribute("verifyIncomingCustomer") Customer customer,
+                      RedirectAttributes redirectAttributes) {
 
-    Order order = new Order();
-    model.addAttribute("coffee", order);
-
-    return "shopping";
+    if (customer.getUsername() != null && customer.getPassword() != null)
+    {
+      Customer customer1 = customerService.getOneCustomerByUsername(customer.getUsername());
+      if (customer1.getUsername().equals(customer.getUsername()) && customer1.getPassword().equals(customer.getPassword())) {
+        // Store the customer into the session.
+        this.currentCustomer = customer;
+        redirectAttributes.addFlashAttribute("currentCustomer", this.currentCustomer);
+        return "redirect:/home";
+      }
+    }
+    return "login";
   }
 
   /**
    *
-   * @return the view for the login page
+   * @param session
+   * @return logout view.
    */
-  @RequestMapping(value = {"/login"})
-  public String login () {
-    return "login";
+  @RequestMapping(value = "/logout", method = {RequestMethod.POST, RequestMethod.GET})
+  public String logout(HttpSession session) {
+    System.out.println("Session time created:" + session.getCreationTime() + " " + session.getId() +
+      session.getLastAccessedTime());
+    session.invalidate();
+    return "logout";
   }
 
 
   @RequestMapping(value = {"/coffee"}, method = RequestMethod.GET)
   public String coffeeProducts(HttpSession session, HttpServletResponse response,
                                HttpServletRequest request,
-                               @ModelAttribute(value = "customer") Customer customer,
                                Model model) {
     return "coffeeProducts";
   }
 
-  /*
-    TODO: How do we identify which customer purchased which thing???
+  /**
+   *
+   * @return the coffee purchased.
    */
-  @RequestMapping(value = "/addCoffeeToCart", method = RequestMethod.POST)
-  public String addCoffee(@ModelAttribute("coffee") Order coffee) {
+  @PostMapping(value = "/addCoffeeToCart")
+  public String addCoffee(RedirectAttributes redirectAttributes) {
+    // Find the user that is already in the database
+    Customer customer = customerService.getOneCustomerByUsername(this.currentCustomer.getUsername());
 
-    Customer customer = customerService.getOneCustomer(1L);
-
+    Order coffee = new Order();
     coffee.setCustomer(customer);
-    coffee.setDescription("Small coffee");
+    coffee.setName("Small Coffee");
     coffee.setPrice(1.50);
-    coffee.setName("Coffee");
-
+    coffee.setDescription("Small coffee");
 
     customer.addOrder(coffee);
 
 
     customerService.saveCustomer(customer);
+    orderService.saveOrder(coffee);
+    // We send attributes to another URL.
+    redirectAttributes.addFlashAttribute(coffee);
+    redirectAttributes.addFlashAttribute(customer);
 
     return "redirect:/shopping";
   }
 
-  /*
-    I believe that you remove whatever is on
-   */
+
   @RequestMapping(value = "/removeFromCart", method = RequestMethod.POST)
-  public String removeFromCart(Model model) {
-    Customer customer = customerService.getOneCustomer(1L);
-    List <Order> orderList = customer.getAllOrders();
-
-    orderService.deleteOrderById(orderList.get(orderList.size() - 1).getId());
-
+  public String removeFromCart(Model model, RedirectAttributes redirectAttributes) {
+    Customer currentCustomer = customerService.getOneCustomerByUsername(this.currentCustomer.getUsername());
+    List<Order> orderList = currentCustomer.getAllOrders();
+    orderService.deleteOrderById(orderList.get( orderList.size() - 1).getId());
 
     return "redirect:/shopping";
   }
 
-
-
-
+  /**
+   *
+   * @param model
+   * @return the view and models of things purchased
+   */
   @RequestMapping(value = "/shoppingCart", method = RequestMethod.GET)
   public String shoppingCart(Model model) {
-    Order coffee_order = new Order();
-    model.addAttribute("coffee", coffee_order);
+//    Customer customer = new Customer();
+    Order order = new Order();
+    Map <String, Object> model_map = model.asMap();
+    Collection model_values = model_map.values();
+    for (Object value : model_values) {
+      if (value instanceof Order) {
+        order = (Order) value;
+      }
+    }
+    model.addAttribute("customer", this.currentCustomer);
     return "shopping";
   }
+
+
 
 
 
@@ -154,40 +183,55 @@ public class CoffeeShopController {
   /**
    *
    * @return the view for creating an account.
+   *
    */
   @RequestMapping(value = "/confirmation")
-  public String confirmationView(Model model) {
+  public String confirmationView(Model model, HttpServletRequest request, HttpServletResponse response) {
+    Map <String, Object> savedCustomerModel = model.asMap();
     Customer customer = new Customer();
-    model.addAttribute("customer", customer);
+    Collection model_values = savedCustomerModel.values();
+    for (Object value : model_values) {
+      if (value instanceof  Customer) {
+        // populate this currentCustomer with the flash attributes sent by registration().
+        customer = (Customer) value;
+      }
+    }
+    model.addAttribute("savedCustomer", customer);
     return "confirmation";
   }
 
+
   /**
    *
-   * @param model
-   * @param response
-   * @return
+   * @param customer
+   * @param redirectAttributes:
+   *          the attributes to save and send to another URL if we added a Customer.
+   *          redirectAttributes does not work if we are not redirecting to another URL.
+   *
+   *          After the redirect, flash attributes are automatically added to the model of the
+   *          controller that serves the target URL.
+   *
+   * @return a view of registration or confirmation.
+   * A Controller can be a POST or GET
    */
-  @RequestMapping(value = {"/registration"})
-  public String registrationView(Model model, HttpServletResponse response) {
-    Customer customer = new Customer();
-    model.addAttribute("customer", customer);
+  @RequestMapping(value = {"/registration", "/registerCustomer"}, method = {RequestMethod.GET, RequestMethod.POST})
+  public String registration(@ModelAttribute("incomingCustomer") Customer customer,
+                             RedirectAttributes redirectAttributes, HttpSession session) {
+    // If this is a new currentCustomer.
+    if (!(customer.getFirstName() == null && customer.getLastName() == null
+      &&customer.getUsername() == null && customer.getPassword() == null && customer.getAddress() == null
+      && customer.getAllOrders().isEmpty())) {
+
+      // we save the currentCustomer
+      customerService.saveCustomer(customer);
+      // the new currentCustomer inside a Session.
+      this.currentCustomer = customer;
+
+      // Make the attributes persist when redirecting to another URL.
+      // We sent the currentCustomer that is in the session to another url.
+      redirectAttributes.addFlashAttribute(this.currentCustomer);
+      return "redirect:/confirmation";
+    }
     return "registration";
-  }
-
-  /**
-   *
-   * @param customer it is the model to be bind by the input fields values of the form registration.jsp
-   * @return the Spring Bean / Java Bean "Customer" to the registration view.
-   *
-   * @ModelAttribute without this annotation, we would have to manually do the request.getParam("paramName") for each
-   *                 form field.
-   */
-  @PostMapping(value = {"/registerCustomer"})
-  public String registerCustomer (@ModelAttribute ("customer") Customer customer, Model model) {
-    customerService.saveCustomer(customer);
-
-    model.addAttribute("customer", customer);
-    return "redirect:/confirmation";
   }
 }
