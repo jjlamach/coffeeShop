@@ -19,7 +19,7 @@
 <%--Imagen--%>
 <div class="container" align="center">
     <%--<img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/randomFood.png"--%>
-         <%--style="width: 120px; height: 120px;">--%>
+    <%--style="width: 120px; height: 120px;">--%>
     <img src="<c:url value="/resources/images/randomFood.png"/>" style="width: 120px; height: 120px;">
 </div>
 
@@ -31,16 +31,16 @@ input values. --%>
         We can add our own error-message when this parameter exists in our URL.
     <%--&ndash;%&gt;--%>
     <%--<c:if test="${param.error != null}">--%>
-        <%--<i style="color:red">--%>
-            <%--Sorry, bad credentials! <br/>--%>
-            <%--Wrong username or password--%>
-        <%--</i>--%>
+    <%--<i style="color:red">--%>
+    <%--Sorry, bad credentials! <br/>--%>
+    <%--Wrong username or password--%>
+    <%--</i>--%>
     <%--</c:if>--%>
 
     <%--<c:if test="${param.logout != null}">--%>
-        <%--<i style="color: darkgreen">--%>
-            <%--You've been logged out!--%>
-        <%--</i>--%>
+    <%--<i style="color: darkgreen">--%>
+    <%--You've been logged out!--%>
+    <%--</i>--%>
     <%--</c:if>--%>
 
 
@@ -48,13 +48,13 @@ input values. --%>
     <div class="form-group">
         <label for="userName">Username</label>
             <%-- Spring expects the name to be "username" --%>
-        <%--<input type="text" name="username" id="userName" class="form-control"/>--%>
+            <%--<input type="text" name="username" id="userName" class="form-control"/>--%>
         <form:input path="username" cssClass="form-control" required="required"/>
     </div>
     <div class="form-group">
         <label for="passWord">Password</label>
             <%-- Spring expects the name to be "password" --%>
-        <%--<input type="password" name="password" id="passWord" class="form-control"/>--%>
+            <%--<input type="password" name="password" id="passWord" class="form-control"/>--%>
         <form:password path="password" cssClass="form-control" required="required"/>
     </div>
     <input type="submit" value="Log in" class="btn btn-sm btn-outline-primary"/>

@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Component
 //@Scope("prototype")
-// To keep track of the Customer in the session
+/* To keep track of the Customer in the session, we change the scope to @Scope("session") */
 @Scope("session")
 public class Customer implements iCustomer, Serializable {
 
