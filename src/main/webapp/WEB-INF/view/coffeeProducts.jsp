@@ -56,35 +56,31 @@ they resize when screen shrinks--%>
 
 
 <div class="container" align="center">
+
     <div class="col-lg-4">
+
         <div class="card">
-            <h6 class="card-header" id="coldBrew">
+            <h6 class="card-header">
                 Coffee
             </h6>
             <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/Rcoffee.png"
                  style="width: 150px; height: 176px">
-            <div class="card-body">
-                <p class="card-text">
-
-                </p>
-            </div>
             <footer class="card-footer">
                 <%--Added the CSS class of button to the form element since it is wrapping the submit input --%>
 
-                <form:form action="${pageContext.request.contextPath}/addCoffeeToCart" method="POST"
-                           cssClass="btn btn-sm btn-primary lef-button">
+                <form:form action="${pageContext.request.contextPath}/purchase" method="POST" cssClass="btn btn-sm btn-primary lef-button">
+                    <input type="text" name="orderType" hidden="true" value="Coffee"/>
+                    <input type="text" hidden="true" name="price" value="1.50"/>
+                    <textarea hidden="true" name="orderDescription">Regular hot coffee</textarea>
                     <input style="background: transparent; border: none; color:white" type="submit" value="Add to cart"/>
                 </form:form>
-                <form:form action="${pageContext.request.contextPath}/removeFromCart" method="POST"
-                           cssClass="btn btn-sm btn-danger right-button">
-                    <input style="background: transparent; border: none; color: white" type="submit" value="Remove from cart"/>
-                </form:form>
-
-                <br/>
-                <br/>
+                <br/> <br/>
                 <strong>Price:</strong> $1.50
             </footer>
         </div>
+
+
+
         <br/>
 
         <div class="card">
@@ -93,22 +89,21 @@ they resize when screen shrinks--%>
             </h6>
             <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/capuccino.png"
                  style="width: 150px; height: 150px;">
-            <div class="card-body">
-                A cappuccino is an espresso-based coffee drink that originated in Italy,
-                and is traditionally prepared with double espresso and steamed milk foam.
-                Variations of the drink involve the use of cream instead of milk,
-                and flavoring with cinnamon or chocolate powder.
-            </div>
+            <p class="card-text">
+                Espresso-based coffee drink
+            </p>
             <footer class="card-footer">
-                <button class="btn btn-sm btn-primary left-button">
-                    Add to cart
-                </button>
+                <form:form action="${pageContext.request.contextPath}/purchase" method="POST" cssClass="btn btn-sm btn-primary left-button">
+                    <input type="hidden" name="orderType" value="Cappuccino"/>
+                    <input type="hidden" name="price" value="2.50"/>
+                    <textarea hidden="true" name="orderDescription">
+                        Espresso-based coffee drink
+                    </textarea>
+                    <input type="submit" value="Add to cart"  style="background: transparent; border: none; color:white;"/>
+                </form:form>
 
-                <button class="btn btn-sm btn-danger right-button">
-                    Remove from cart
-                </button>
-                <br/> <br/>
-                <strong>Price:</strong> $2.00
+                <br/><br/>
+                <strong>Price:</strong> $2.50
             </footer>
         </div>
         <br/>
@@ -129,8 +124,16 @@ they resize when screen shrinks--%>
             </div>
 
             <footer class="card-footer">
-                <button type="submit" name="coldBrew" class="btn btn-sm btn-primary left-button">Add to cart</button>
-                <button type="submit" class="btn btn-sm btn-danger right-button">Remove from cart</button>
+                <form:form method="POST" action="${pageContext.request.contextPath}/purchase"
+                           cssClass="btn btn-sm btn-primary">
+                    <input type="hidden" name="orderType" value="Cold Brew"/>
+                    <input type="hidden" name="price" value="3.50"/>
+                    <textarea hidden="true" name="orderDescription">
+                        It's simply hot coffee that has been cooled down so that it can be poured over ice.
+                    </textarea>
+                    <input type="submit" value="Add to cart"
+                           style="border: none; background: transparent; color: white;"/>
+                </form:form>
                 <br/><br/>
                 <strong>Price:</strong> $3.50
             </footer>

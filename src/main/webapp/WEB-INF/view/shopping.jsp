@@ -1,3 +1,6 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.cdm.depaul.coffeeShop.entities.Order" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
 <html>
 <head>
@@ -42,27 +45,34 @@
     <img class="img-thumbnail" src="${pageContext.request.contextPath}/resources/images/shoppingCart.png"
          style="width: 350px; height: 350px; border-width: thick; border-color: cadetblue ">
     <br/><br/>
-    <h2>Hi, ${customer.username}</h2>
+    <h2>Hi, ${currentCustomer.username}</h2>
     <div class="table-responsive">
         <table class="table table-hover table-striped table-bordered">
             <thead>
             <tr>
                 <th scope="col">Product</th>
-                <th scope="col">Quantity</th>
+                <th scope="col">Description</th>
                 <th scope="col">Price</th>
+                <th scope="col">Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <%--<td>${}</td>--%>
-                <td>${customer.allOrders.size()}</td>
-                <%--<td>${}</td>--%>
-            </tr>
-            <tr>
-
-            </tr>
+            <c:forEach items="${orderList}" var="order">
+                <c:url var="deleteLink" value="${pageContext.request.contextPath}/removeFromCart">
+                    <c:param name="order_number" value="${order.id}"/>
+                </c:url>
+                <tr>
+                    <td>${order.name}</td>
+                    <td>${order.description}</td>
+                    <td>$${order.price}</td>
+                    <td>
+                        <a href="${deleteLink}">Remove</a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
+        <span><strong>Total:</strong> $${total}</span>
     </div>
 </div>
 

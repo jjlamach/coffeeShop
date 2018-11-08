@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
 <html>
 <head>
@@ -51,18 +52,24 @@
 
             <div class="card-body">
                 <p class="card-text">
-                    Try our delicious cheesecake!
+                    Try our cheesecake!
                 </p>
             </div>
             <footer class="card-footer">
-                <button class="btn btn-sm btn-primary left-button">Add to cart</button>
-                <button class="btn btn-sm btn-danger right-button">Remove from cart</button>
+                <form:form method="POST" action="${pageContext.request.contextPath}/purchase" cssClass="btn btn-sm btn-primary">
+                    <input type="hidden" name="orderType" value="Strawberry Cheesecake"/>
+                    <input type="hidden" name="price" value="5.50"/>
+                    <textarea hidden="true" name="orderDescription">
+                        Cheesecake with lot of strawberries
+                    </textarea>
+                    <input type="submit" value="Add to cart" style="background: transparent; color:white; border: none;"/>
+                </form:form>
             </footer>
         </div>
         <br/>
         <div class="card">
             <h6 class="card-header">
-                Oreo Cheesecake
+               Cake with lot of oreo
             </h6>
             <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/oreo.png"
                  style="width: 150px; height: 150px;">
@@ -72,8 +79,14 @@
                 </p>
             </div>
             <footer class="card-footer">
-                <button class="btn btn-sm btn-primary left-button">Add to cart</button>
-                <button class="btn btn-sm btn-danger right-button">Remove from cart</button>
+                <form:form cssClass="btn btn-sm btn-primary" method="POST" action="${pageContext.request.contextPath}/purchase">
+                    <input type="hidden" name="orderType" value="Oreo Cheesecake"/>
+                    <input type="hidden" name="price" value="5.50"/>
+                    <textarea hidden="true" name="orderDescription">
+                        Oreo Cheesecake
+                    </textarea>
+                    <input type="submit" style="border: none; background: transparent; color:white;"/>
+                </form:form>
             </footer>
         </div>
 

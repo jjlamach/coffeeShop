@@ -68,7 +68,8 @@ public class CoffeeShopController {
     if (customer.getUsername() != null && customer.getPassword() != null)
     {
       Customer customer1 = customerService.getOneCustomerByUsername(customer.getUsername());
-      if (customer1.getUsername().equals(customer.getUsername()) && customer1.getPassword().equals(customer.getPassword())) {
+      if (customer1.getUsername().equals(customer.getUsername()) &&
+        customer1.getPassword().equals(customer.getPassword())) {
         // Store the customer into the session.
         this.currentCustomer = customer;
         redirectAttributes.addFlashAttribute("currentCustomer", this.currentCustomer);
@@ -92,48 +93,42 @@ public class CoffeeShopController {
   }
 
 
-  @RequestMapping(value = {"/coffee"}, method = RequestMethod.GET)
-  public String coffeeProducts(HttpSession session, HttpServletResponse response,
-                               HttpServletRequest request,
-                               Model model) {
+
+  @RequestMapping(value = {"/coffeeProducts"}, method = {RequestMethod.GET})
+  public String coffeeProducts(@ModelAttribute("order") Order order, Model model) {
     return "coffeeProducts";
   }
 
-  /**
-   *
-   * @return the coffee purchased.
-   */
-  @PostMapping(value = "/addCoffeeToCart")
-  public String addCoffee(RedirectAttributes redirectAttributes) {
-    // Find the user that is already in the database
+
+  @PostMapping(value = {"/purchase"})
+  public String purchase(HttpServletRequest request) {
+    String getOrderName = request.getParameter("orderType");
+    String orderDescription = request.getParameter("orderDescription");
+    double orderPrice = Double.parseDouble(request.getParameter("price").toString());
+
     Customer customer = customerService.getOneCustomerByUsername(this.currentCustomer.getUsername());
 
-    Order coffee = new Order();
-    coffee.setCustomer(customer);
-    coffee.setName("Small Coffee");
-    coffee.setPrice(1.50);
-    coffee.setDescription("Small coffee");
+    Order order = new Order();
+    order.setName(getOrderName);
+    order.setDescription(orderDescription);
+    order.setPrice(orderPrice);
 
-    customer.addOrder(coffee);
+    customer.addOrder(order);
 
+    order.setCustomer(customer);
 
     customerService.saveCustomer(customer);
-    orderService.saveOrder(coffee);
-    // We send attributes to another URL.
-    redirectAttributes.addFlashAttribute(coffee);
-    redirectAttributes.addFlashAttribute(customer);
+    orderService.saveOrder(order);
 
-    return "redirect:/shopping";
+    return "redirect:/shoppingCart";
   }
 
 
-  @RequestMapping(value = "/removeFromCart", method = RequestMethod.POST)
-  public String removeFromCart(Model model, RedirectAttributes redirectAttributes) {
-    Customer currentCustomer = customerService.getOneCustomerByUsername(this.currentCustomer.getUsername());
-    List<Order> orderList = currentCustomer.getAllOrders();
-    orderService.deleteOrderById(orderList.get( orderList.size() - 1).getId());
-
-    return "redirect:/shopping";
+  @RequestMapping(value = {"/removeFromCart"}, method = {RequestMethod.GET})
+  public String removeFromCart (Model model, @RequestParam(name = "order_number") long order_number) {
+    Order orderToDelete = orderService.getOneOrder(order_number);
+    orderService.deleteOrder(orderToDelete);
+    return "redirect:/shoppingCart";
   }
 
   /**
@@ -143,16 +138,16 @@ public class CoffeeShopController {
    */
   @RequestMapping(value = "/shoppingCart", method = RequestMethod.GET)
   public String shoppingCart(Model model) {
-//    Customer customer = new Customer();
-    Order order = new Order();
-    Map <String, Object> model_map = model.asMap();
-    Collection model_values = model_map.values();
-    for (Object value : model_values) {
-      if (value instanceof Order) {
-        order = (Order) value;
-      }
+
+    double total = 0.0;
+    List <Order> orderList = orderService.findAll();
+    for (Order order : orderList) {
+      total = total + order.getPrice();
     }
-    model.addAttribute("customer", this.currentCustomer);
+    model.addAttribute("orderList", orderList);
+    model.addAttribute("currentCustomer", this.currentCustomer);
+    model.addAttribute("total", total);
+
     return "shopping";
   }
 

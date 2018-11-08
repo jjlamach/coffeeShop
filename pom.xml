@@ -55,7 +55,7 @@
             <artifactId>spring-boot-starter-integration</artifactId>
         </dependency>
 
-        <!--&lt;!&ndash; For Spring Security &ndash;&gt;-->
+        <!-- For Spring Security -->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-starter-security</artifactId>-->

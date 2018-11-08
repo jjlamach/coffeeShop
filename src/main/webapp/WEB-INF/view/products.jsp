@@ -47,7 +47,7 @@
     <div class="row">
         <%--Coffee--%>
         <div class="col-sm">
-            <a class="card" href="/coffee">
+            <a class="card" href="/coffeeProducts">
                 <img class="card-img-top"
                      src="${pageContext.request.contextPath}/resources/images/coffee.png"
                      width="260" height="270">

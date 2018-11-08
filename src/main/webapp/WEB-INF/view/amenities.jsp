@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  session="false" %>
 <html>
 <head>
@@ -48,8 +49,14 @@
             <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/croissant.png"
                  style="width: 180px; height: 150px;">
             <footer class="card-footer">
-                <button class="btn btn-sm btn-primary left-button">Add to cart</button>
-                <button class="btn btn-sm btn-danger right-button">Remove from cart</button>
+                <form:form  action="${pageContext.request.contextPath}/purchase" method="POST" cssClass="btn btn-sm btn-primary">
+                    <input type="hidden" name="orderType" value="Croissant"/>
+                    <input type="hidden" name="price" value="3.20"/>
+                    <textarea hidden="true" name="orderDescription">
+                        A croissant
+                    </textarea>
+                    <input type="submit" value="Add to cart" style="border:none; background: transparent; color:white"/>
+                </form:form>
             </footer>
         </div>
         <br/>
@@ -60,8 +67,14 @@
             <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/orange.png"
                  style="width: 150px; height: 150px;">
             <footer class="card-footer">
-                <button class="btn btn-sm btn-primary left-button">Add to cart</button>
-                <button class="btn btn-sm btn-danger right-button">Remove from cart</button>
+                <form:form action="${pageContext.request.contextPath}/purchase" method="POST" cssClass="btn btn-sm btn-primary">
+                    <input type="hidden" name="orderType" value="Orange Juice"/>
+                    <input type="hidden" name="price" value="2.50"/>
+                    <textarea hidden="true" name="orderDescription">
+                        A glass of orange juice
+                    </textarea>
+                    <input type="submit" value="Add to cart" style="border: none; background: transparent; color:white;"/>
+                </form:form>
             </footer>
         </div>
 
