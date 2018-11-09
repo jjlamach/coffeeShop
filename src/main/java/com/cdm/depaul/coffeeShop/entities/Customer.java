@@ -3,8 +3,11 @@ package com.cdm.depaul.coffeeShop.entities;
 import com.cdm.depaul.coffeeShop.interfaces.iCustomer;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.ApplicationScope;
+import org.springframework.web.context.annotation.SessionScope;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,8 @@ import java.util.Objects;
 @Component
 //@Scope("prototype")
 /* To keep track of the Customer in the session, we change the scope to @Scope("session") */
-@Scope("session")
+//@Scope("session")
+@ApplicationScope
 public class Customer implements iCustomer, Serializable {
 
 
@@ -28,6 +32,7 @@ public class Customer implements iCustomer, Serializable {
   /*
     Primary Key of the Customer table.
    */
+  @NotNull
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "customer_id")

@@ -22,9 +22,9 @@
         <footer class="card-footer">
             <h4 class="text-center"> Registration Complete</h4>
             <p>
-                Hi, ${savedCustomer.firstName} ${savedCustomer.lastName} <br/>
-                <strong>Username:</strong> ${savedCustomer.username} <br/>
-                <strong>Password:</strong> ${savedCustomer.password}
+                Hi, ${currentCustomer.firstName} ${currentCustomer.lastName} <br/>
+                <strong>Username:</strong> ${currentCustomer.username} <br/>
+                <strong>Password:</strong> ${currentCustomer.password}
 
             </p>
         </footer>

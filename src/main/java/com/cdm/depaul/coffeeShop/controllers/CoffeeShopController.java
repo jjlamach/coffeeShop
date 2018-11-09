@@ -5,23 +5,22 @@ import com.cdm.depaul.coffeeShop.entities.Order;
 import com.cdm.depaul.coffeeShop.services.CustomerService;
 import com.cdm.depaul.coffeeShop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.ApplicationScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @Component
-@Scope("singleton")
+//@Scope("singleton")
+@ApplicationScope
 public class CoffeeShopController {
 
   @Autowired
@@ -29,10 +28,6 @@ public class CoffeeShopController {
 
   @Autowired
   private OrderService orderService;
-
-  // The currentCustomer that is currently in the session
-  @Autowired
-  private Customer currentCustomer;
 
 
   public CoffeeShopController() { }
@@ -43,8 +38,9 @@ public class CoffeeShopController {
    * @return the home view
    */
   @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
-  public String home(Model model) {
-    model.addAttribute("currentCustomer", this.currentCustomer);
+  public String home(Model model, HttpSession session) {
+    Customer customer = (Customer) session.getAttribute("currentCustomer");
+    model.addAttribute("currentCustomer", customer);
     return "home";
   }
 
@@ -63,21 +59,23 @@ public class CoffeeShopController {
    */
   @RequestMapping(value = {"/login", "/authenticateUser"}, method = {RequestMethod.GET, RequestMethod.POST})
   public String login(@ModelAttribute("verifyIncomingCustomer") Customer customer,
-                      RedirectAttributes redirectAttributes) {
+                      RedirectAttributes redirectAttributes,
+                      HttpServletRequest request, HttpSession session) {
 
-    if (customer.getUsername() != null && customer.getPassword() != null)
-    {
+
+    if (customer.getUsername() != null && customer.getPassword() != null) {
       Customer customer1 = customerService.getOneCustomerByUsername(customer.getUsername());
-      if (customer1.getUsername().equals(customer.getUsername()) &&
-        customer1.getPassword().equals(customer.getPassword())) {
-        // Store the customer into the session.
-        this.currentCustomer = customer;
-        redirectAttributes.addFlashAttribute("currentCustomer", this.currentCustomer);
+      if (customer1.getUsername().equals( customer.getUsername()) && customer1.getPassword().equals(customer.getPassword())) {
+        session = request.getSession(true);
+
+        session.setAttribute("currentCustomer", customer);
         return "redirect:/home";
       }
     }
     return "login";
   }
+
+
 
   /**
    *
@@ -86,8 +84,6 @@ public class CoffeeShopController {
    */
   @RequestMapping(value = "/logout", method = {RequestMethod.POST, RequestMethod.GET})
   public String logout(HttpSession session) {
-    System.out.println("Session time created:" + session.getCreationTime() + " " + session.getId() +
-      session.getLastAccessedTime());
     session.invalidate();
     return "logout";
   }
@@ -101,12 +97,17 @@ public class CoffeeShopController {
 
 
   @PostMapping(value = {"/purchase"})
-  public String purchase(HttpServletRequest request) {
+  public String purchase(HttpServletRequest request, RedirectAttributes redirectAttributes, HttpSession session) {
+
     String getOrderName = request.getParameter("orderType");
     String orderDescription = request.getParameter("orderDescription");
     double orderPrice = Double.parseDouble(request.getParameter("price").toString());
 
-    Customer customer = customerService.getOneCustomerByUsername(this.currentCustomer.getUsername());
+    Customer customerInSession = (Customer) session.getAttribute("currentCustomer");
+
+
+    Customer customer = customerService.getOneCustomerByUsername(customerInSession.getUsername());
+
 
     Order order = new Order();
     order.setName(getOrderName);
@@ -119,6 +120,8 @@ public class CoffeeShopController {
 
     customerService.saveCustomer(customer);
     orderService.saveOrder(order);
+
+
 
     return "redirect:/shoppingCart";
   }
@@ -137,15 +140,20 @@ public class CoffeeShopController {
    * @return the view and models of things purchased
    */
   @RequestMapping(value = "/shoppingCart", method = RequestMethod.GET)
-  public String shoppingCart(Model model) {
+  public String shoppingCart(Model model, HttpSession session) {
+
+    Customer customer = (Customer) session.getAttribute("currentCustomer");
+
+    Customer customerToFind = customerService.getOneCustomerByUsername(customer.getUsername());
 
     double total = 0.0;
-    List <Order> orderList = orderService.findAll();
+
+    List <Order> orderList = orderService.findAllVersion2(customerToFind.getId());
     for (Order order : orderList) {
-      total = total + order.getPrice();
+      System.out.println(order.getName() + " " + order.getPrice());
     }
     model.addAttribute("orderList", orderList);
-    model.addAttribute("currentCustomer", this.currentCustomer);
+    model.addAttribute("currentCustomer", customer);
     model.addAttribute("total", total);
 
     return "shopping";
@@ -181,17 +189,11 @@ public class CoffeeShopController {
    *
    */
   @RequestMapping(value = "/confirmation")
-  public String confirmationView(Model model, HttpServletRequest request, HttpServletResponse response) {
-    Map <String, Object> savedCustomerModel = model.asMap();
-    Customer customer = new Customer();
-    Collection model_values = savedCustomerModel.values();
-    for (Object value : model_values) {
-      if (value instanceof  Customer) {
-        // populate this currentCustomer with the flash attributes sent by registration().
-        customer = (Customer) value;
-      }
-    }
-    model.addAttribute("savedCustomer", customer);
+  public String confirmationView(Model model, HttpSession session) {
+
+    Customer currentCustomer = (Customer) session.getAttribute("currentCustomer");
+    model.addAttribute("currentCustomer", currentCustomer);
+
     return "confirmation";
   }
 
@@ -211,7 +213,10 @@ public class CoffeeShopController {
    */
   @RequestMapping(value = {"/registration", "/registerCustomer"}, method = {RequestMethod.GET, RequestMethod.POST})
   public String registration(@ModelAttribute("incomingCustomer") Customer customer,
-                             RedirectAttributes redirectAttributes, HttpSession session) {
+                             RedirectAttributes redirectAttributes,
+                             HttpServletRequest request,
+                             HttpServletResponse response,
+                             HttpSession session) {
     // If this is a new currentCustomer.
     if (!(customer.getFirstName() == null && customer.getLastName() == null
       &&customer.getUsername() == null && customer.getPassword() == null && customer.getAddress() == null
@@ -219,12 +224,16 @@ public class CoffeeShopController {
 
       // we save the currentCustomer
       customerService.saveCustomer(customer);
-      // the new currentCustomer inside a Session.
-      this.currentCustomer = customer;
 
-      // Make the attributes persist when redirecting to another URL.
-      // We sent the currentCustomer that is in the session to another url.
-      redirectAttributes.addFlashAttribute(this.currentCustomer);
+      session = request.getSession(true);
+
+
+      Customer currentCustomer = customerService.getOneCustomer(customer.getId());
+      System.out.println(currentCustomer.getId());
+
+      session.setAttribute("currentCustomer", currentCustomer);
+
+
       return "redirect:/confirmation";
     }
     return "registration";

@@ -4,8 +4,10 @@ import com.cdm.depaul.coffeeShop.interfaces.iOrder;
 import org.hibernate.annotations.Cascade;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.ApplicationScope;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -19,7 +21,8 @@ import java.util.Objects;
 @Table(name = "customer_order")
 @Component
 //@Scope("prototype")
-@Scope("session")
+//@Scope("session")
+@ApplicationScope
 public class Order implements iOrder, Serializable {
 
   private static final long serialVersionUID = 4876487231629720215L;
