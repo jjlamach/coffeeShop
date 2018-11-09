@@ -13,39 +13,48 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
           crossorigin="anonymous">
+    <link rel="icon" typeof="image/x-icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
     <title>Sweets & Coffee</title>
 </head>
-<body>
+<body style="background-color: ghostwhite">
 <br/>
+
+<%--JavaScript code --%>
+<script>
+    $(document).ready (function() {
+        var fName = document.getElementById("fName").focus();
+    });
+</script>
+
 
 
 <h4 class="header text-center">Registration</h4>
 <div class="container col-lg-3">
-    <form:form action="/registerCustomer" method="POST" modelAttribute="incomingCustomer">
+    <form:form action="/registerCustomer" method="POST" modelAttribute="incomingCustomer" id="regForm">
 
         <div class="form-group">
             <label for="firstName">First name</label>
-            <form:input path="firstName" cssClass="form-control" required="required"/>
+            <form:input path="firstName" cssClass="form-control" required="required" id="fName"/>
         </div>
 
         <div class="form-group">
             <label fo="lastName">Last name</label>
-            <form:input path="lastName" cssClass="form-control" required="required"/>
+            <form:input path="lastName" cssClass="form-control" required="required" id="lName"/>
         </div>
 
         <div class="form-group">
             <label for="address">Address</label>
-            <form:input path="address" cssClass="form-control" required="required"/>
+            <form:input path="address" cssClass="form-control" required="required" id="address"/>
         </div>
 
         <div class="form-group">
             <label for="username">Username</label>
-            <form:input path="username" cssClass="form-control" required="required"/>
+            <form:input path="username" cssClass="form-control" required="required" id="username"/>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <form:password path="password" showPassword="false" cssClass="form-control" required="required"/>
+            <form:password path="password" showPassword="false" cssClass="form-control" required="required" id="password"/>
         </div>
         <%-- To submit the form. --%>
         <input type="submit" class="btn btn-sm btn-outline-success" value="Register"/>

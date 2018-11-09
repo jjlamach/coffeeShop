@@ -3,10 +3,15 @@
 <html>
 <head>
     <title>Sweets & Coffee</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="${pageContext.request.contextPath}/resources/jquery/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/coffee.js"></script>
     <link rel="stylesheet" href=${pageContext.request.contextPath}/resources/css/coffee.css>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="icon" typeof="image/x-icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
