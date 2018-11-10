@@ -10,7 +10,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.ViewResolver;
@@ -37,7 +36,6 @@ import java.util.logging.Logger;
 @EnableJpaAuditing
 @EnableJpaRepositories
 @EnableWebMvc
-//@ComponentScan(basePackages = {"com.cdm.depaul.coffeeShop"})  @SpringBootApplication already doing this scan
 public class CoffeeShopApplication implements CommandLineRunner, WebMvcConfigurer {
 
 
@@ -66,12 +64,18 @@ public class CoffeeShopApplication implements CommandLineRunner, WebMvcConfigure
 
   /**
    * Redirects to views based off of paths.
+   * Spring: "You can use it in static cases when there is no Java controller logic to execute before the view generates the response."
+   * https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-config
    * @param registry
    */
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addRedirectViewController("/", "/login");
     registry.addRedirectViewController("/registration", "/registration");
+    registry.addViewController("/sweets");
+    registry.addViewController("/products");
+    registry.addViewController("/amenities");
+    registry.addViewController("/coffeeProducts");
   }
 
 

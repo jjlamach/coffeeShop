@@ -43,13 +43,6 @@ public class CoffeeShopController {
     return "home";
   }
 
-
-  @RequestMapping(value = {"/products"}, method = RequestMethod.GET)
-  public String products(HttpServletRequest request, HttpServletResponse response, Model model) {
-    return "products";
-  }
-
-
   /**
    *
    * @param customer
@@ -87,13 +80,6 @@ public class CoffeeShopController {
   public String logout(HttpSession session) {
     session.invalidate();
     return "logout";
-  }
-
-
-
-  @RequestMapping(value = {"/coffeeProducts"}, method = {RequestMethod.GET})
-  public String coffeeProducts(@ModelAttribute("order") Order order, Model model) {
-    return "coffeeProducts";
   }
 
   /**
@@ -170,27 +156,6 @@ public class CoffeeShopController {
 
     return "shopping";
   }
-
-
-  /**
-   * The view for sweets.
-   * @return
-   */
-  @RequestMapping(value = "/sweets", method = RequestMethod.GET)
-  public String sweetProducts () {
-    return "sweets";
-  }
-
-
-  /**
-   * The view for random food.
-   * @return
-   */
-  @RequestMapping(value = {"/amenities"}, method = RequestMethod.GET)
-  public String amenities () {
-    return "amenities";
-  }
-
 
   /**
    *
