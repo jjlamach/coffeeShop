@@ -1,10 +1,12 @@
 package com.cdm.depaul.coffeeShop.configuration;
 
+import com.cdm.depaul.coffeeShop.CoffeeShopApplication;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
  * https://docs.spring.io/spring-framework/docs/5.0.9.RELEASE/javadoc-api/org/springframework/web/WebApplicationInitializer.html?is-external=true
- * This is the servlet.xml file in Java.
+ *
+ * This is the servlet.xml file in Java. Configures the DispatcherServlet / FrontController of Spring.
  */
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -19,7 +21,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
    */
   @Override
   protected Class<?>[] getServletConfigClasses() {
-    return new Class[] { ApplicationContext.class };
+    return new Class[] { CoffeeShopApplication.class };
   }
 
   /**
