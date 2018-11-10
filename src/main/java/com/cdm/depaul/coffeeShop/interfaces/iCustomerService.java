@@ -22,6 +22,8 @@ public interface iCustomerService {
 
   Customer getOneCustomerByUsername (String username);
 
+  Customer getOneByFirstNameAndLastNameAndPassword (String firstName, String lastName, String password);
+
   int hashCode();
 
   String toString ();

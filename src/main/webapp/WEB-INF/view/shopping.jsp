@@ -1,6 +1,5 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.cdm.depaul.coffeeShop.entities.Order" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
 <html>
 <head>
@@ -39,7 +38,10 @@
         <%--Lol... Use another Navbar.--%>
         <div class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/logout">Sign Out</a>
+                <%--<a class="nav-link" href="${pageContext.request.contextPath}/logout">Sign Out</a>--%>
+                <form:form action="${pageContext.request.contextPath}/logout" method="POST">
+                    <input class="btn btn-sm btn-outline-info" type="submit" value="Sign Out"/>
+                </form:form>
             </li>
         </div>
     </div>
@@ -52,6 +54,9 @@
          style="width: 350px; height: 350px; border-width: thick; border-color: cadetblue ">
     <br/><br/>
     <h2>Hi, ${currentCustomer.username}</h2>
+    <span class="float-right" style="padding-right: 60px;">
+        <strong>Total:</strong> $${total}
+    </span>
     <div class="table-responsive">
         <table class="table table-hover table-striped table-bordered">
             <thead>
@@ -59,7 +64,7 @@
                 <th scope="col">Product</th>
                 <th scope="col">Description</th>
                 <th scope="col">Price</th>
-                <th scope="col">Delete</th>
+                <th scope="col"> </th>
             </tr>
             </thead>
             <tbody>
@@ -72,13 +77,12 @@
                     <td>${order.description}</td>
                     <td>$${order.price}</td>
                     <td>
-                        <a href="${deleteLink}">Remove</a>
+                        <a href="${deleteLink}"><i class="fas fa-trash-alt fa-2x"></i></a>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
-        <span><strong>Total:</strong> $${total}</span>
     </div>
 </div>
 

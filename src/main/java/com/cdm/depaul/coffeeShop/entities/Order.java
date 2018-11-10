@@ -10,7 +10,7 @@ import java.util.Objects;
 
 /**
  * Serialization: where an object can be represented as a sequence of bytes that
- * includes the object's data as well as information about the object's type and the types of data stored in the object.
+ *  includes the object's data as well as information about the object's type and the types of data stored in the object.
  *
  * - Can be written to a file and turn back to an object in memory again (deserialization).
  */
@@ -23,10 +23,6 @@ public class Order implements iOrder, Serializable {
   private static final long serialVersionUID = 4876487231629720215L;
 
 
-  /*
-      Primary Key
-      customer_order add constraint FKf9abd30bhiqvugayxlpq8ryq9 foreign key (customer_id) references customer (customer_id)
-   */
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "order_number")

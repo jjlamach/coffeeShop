@@ -68,6 +68,12 @@ public class CustomerService implements iCustomerService, Serializable {
   }
 
   @Override
+  public Customer getOneByFirstNameAndLastNameAndPassword(String firstName, String lastName, String password) {
+    Optional<Customer> optionalCustomer = customerRepository.findByFirstNameAndLastNameAndPassword(firstName, lastName, password);
+    return optionalToCustomer(optionalCustomer);
+  }
+
+  @Override
   public Customer getOneCustomerByUsername(String username) {
     Optional <Customer> optionalCustomer = customerRepository.findCustomerByUsername(username);
     return optionalToCustomer(optionalCustomer);

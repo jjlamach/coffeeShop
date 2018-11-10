@@ -42,7 +42,10 @@
         <%--Lol... Use another Navbar.--%>
         <div class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/logout">Sign Out</a>
+                <%--<a class="nav-link" href="${pageContext.request.contextPath}/logout">Sign Out</a>--%>
+                <form:form action="${pageContext.request.contextPath}/logout" method="POST">
+                    <input class="btn btn-sm btn-outline-info" type="submit" value="Sign Out"/>
+                </form:form>
             </li>
         </div>
     </div>

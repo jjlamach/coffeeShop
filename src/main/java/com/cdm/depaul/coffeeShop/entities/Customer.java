@@ -3,8 +3,6 @@ package com.cdm.depaul.coffeeShop.entities;
 import com.cdm.depaul.coffeeShop.interfaces.iCustomer;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.ApplicationScope;
-import org.springframework.web.context.annotation.SessionScope;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -52,12 +50,13 @@ public class Customer implements iCustomer, Serializable {
 
 
   /**
-   * FetchType.EAGER: load everything.
+   * FetchType.EAGER: loads everything.
    * mappedBy: refers to the Customer field that is on the Order class.
    *          Tells Hibernate how to map this table with the other table by using the information
    *          that is at @joinColumn.
    *
    */
+
   /**
    * Customer -> many orders
    */

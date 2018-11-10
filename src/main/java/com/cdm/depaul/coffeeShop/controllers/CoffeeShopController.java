@@ -34,7 +34,8 @@ public class CoffeeShopController {
   /**
    *
    * @param model
-   * @return the home view
+   * @param session
+   * @return home view
    */
   @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
   public String home(Model model, HttpSession session) {
@@ -200,7 +201,6 @@ public class CoffeeShopController {
 
 
       Customer currentCustomer = customerService.getOneCustomerById(customer.getId());
-      System.out.println(currentCustomer.getId());
 
       session.setAttribute("currentCustomer", currentCustomer);
 

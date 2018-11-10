@@ -16,7 +16,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
   }
 
   /**
-   * Tell the Front Controller where the applicationContext/app configuration is.
+   * Tells the Front Controller where the applicationContext / application configuration is.
    * @return
    */
   @Override
@@ -26,7 +26,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
   /**
    *
-   * Tell the Front Controller to handle all requests of this pattern: "/"; all requests...
+   * Tells the Front Controller to handle all requests of this pattern: "/", all requests.
    * @return
    */
   @Override

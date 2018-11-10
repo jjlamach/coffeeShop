@@ -6,22 +6,27 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository < Customer, Long> {
-  // Native query as in the standard SQL language?
+  /* Native query: these are actual SQL queries. */
   @Query(value = "SELECT * FROM customer c where c.first_name =:firstName and c.last_name =:lastName and c.password =:password LIMIT 1",
     nativeQuery = true)
-  Optional <Customer> findByFirstNameAndLastNameAAndAddress(@Param("firstName") String firstName,
+  Optional <Customer> findByFirstNameAndLastNameAndPassword(@Param("firstName") String firstName,
                                                             @Param("lastName") String lastName,
                                                             @Param("password") String password);
 
+
+
+  @Query(value = "SELECT * FROM customer where customer.customer_id =:customerId", nativeQuery = true)
   @Override
-  Customer getOne(Long aLong);
+  Customer getOne(@Param("customerId") Long customerId);
 
 
+
+
+  /* @Param: data binding parameter. */
   @Query(value = "SELECT * FROM customer c where c.username =:username LIMIT 1", nativeQuery = true)
   Optional<Customer> findCustomerByUsername(@Param("username") String username);
 

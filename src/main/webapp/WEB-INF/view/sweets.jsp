@@ -37,7 +37,10 @@
         <%--Lol... Use another Navbar.--%>
         <div class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Sign Out</a>
+                <%--<a class="nav-link" href="#">Sign Out</a>--%>
+                <form:form action="${pageContext.request.contextPath}/logout" method="POST">
+                    <input class="btn btn-sm btn-outline-info" type="submit" value="Sign Out"/>
+                </form:form>
             </li>
         </div>
     </div>
@@ -75,7 +78,7 @@
         <br/>
         <div class="card">
             <h6 class="card-header">
-               Cake with lot of oreo
+                Cake with lot of oreo
             </h6>
             <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/oreo.png"
                  style="width: 150px; height: 150px;">
@@ -92,7 +95,7 @@
                         Oreo Cheesecake
                     </textarea>
                     <input type="submit" style="border: none; background: transparent; color:white;"
-                    value="Add to cart"/>
+                           value="Add to cart"/>
                 </form:form>
             </footer>
         </div>
