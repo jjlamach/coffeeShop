@@ -25,11 +25,7 @@ public interface OrderRepository extends JpaRepository <Order, Long> {
   @Override
   List<Order> findAll();
 
-//  @Query(value = "SELECT * FROM customer_order WHERE customer_order.customer_id =:customerId",nativeQuery = true)
-//  List <Order> currentCustomerOrders(@Param("customerId") Long customerId);
-
-  @Query(value = "SELECT * FROM customer_order where customer_order.customer_id =:customerID",
-  nativeQuery = true)
-  List<Order> findAllVersion2(@Param("customerID") long customerID);
+  @Query(value = "SELECT * FROM customer_order where customer_order.customer_id =:customerID", nativeQuery = true)
+  List<Order> findAllOrdersByCustomerId(@Param("customerID") long customerID);
 
 }

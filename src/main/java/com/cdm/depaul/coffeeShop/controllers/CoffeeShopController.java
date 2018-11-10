@@ -5,11 +5,11 @@ import com.cdm.depaul.coffeeShop.entities.Order;
 import com.cdm.depaul.coffeeShop.services.CustomerService;
 import com.cdm.depaul.coffeeShop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.ApplicationScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +19,7 @@ import java.util.List;
 
 @Controller
 @Component
-//@Scope("singleton")
-@ApplicationScope
+@Scope("session")
 public class CoffeeShopController {
 
   @Autowired
@@ -60,14 +59,16 @@ public class CoffeeShopController {
   @RequestMapping(value = {"/login", "/authenticateUser"}, method = {RequestMethod.GET, RequestMethod.POST})
   public String login(@ModelAttribute("verifyIncomingCustomer") Customer customer,
                       RedirectAttributes redirectAttributes,
-                      HttpServletRequest request, HttpSession session) {
+                      HttpServletRequest request) {
 
 
-    if (customer.getUsername() != null && customer.getPassword() != null) {
+    if (customer.getUsername() != null && customer.getPassword() != null)
+    {
       Customer customer1 = customerService.getOneCustomerByUsername(customer.getUsername());
-      if (customer1.getUsername().equals( customer.getUsername()) && customer1.getPassword().equals(customer.getPassword())) {
-        session = request.getSession(true);
+      if (customer1.getUsername().equals( customer.getUsername())
+        && customer1.getPassword().equals(customer.getPassword())){
 
+        HttpSession session = request.getSession(true);
         session.setAttribute("currentCustomer", customer);
         return "redirect:/home";
       }
@@ -95,7 +96,13 @@ public class CoffeeShopController {
     return "coffeeProducts";
   }
 
-
+  /**
+   * Makes a purchase.
+   * @param request
+   * @param redirectAttributes
+   * @param session
+   * @return
+   */
   @PostMapping(value = {"/purchase"})
   public String purchase(HttpServletRequest request, RedirectAttributes redirectAttributes, HttpSession session) {
 
@@ -126,10 +133,15 @@ public class CoffeeShopController {
     return "redirect:/shoppingCart";
   }
 
-
+  /**
+   * Removes from the cart.
+   * @param model
+   * @param order_number
+   * @return
+   */
   @RequestMapping(value = {"/removeFromCart"}, method = {RequestMethod.GET})
   public String removeFromCart (Model model, @RequestParam(name = "order_number") long order_number) {
-    Order orderToDelete = orderService.getOneOrder(order_number);
+    Order orderToDelete = orderService.getOneOrderById(order_number);
     orderService.deleteOrder(orderToDelete);
     return "redirect:/shoppingCart";
   }
@@ -148,9 +160,9 @@ public class CoffeeShopController {
 
     double total = 0.0;
 
-    List <Order> orderList = orderService.findAllVersion2(customerToFind.getId());
+    List <Order> orderList = orderService.getAllOrdersOfCustomerById(customerToFind.getId());
     for (Order order : orderList) {
-      System.out.println(order.getName() + " " + order.getPrice());
+      total = total + order.getPrice();
     }
     model.addAttribute("orderList", orderList);
     model.addAttribute("currentCustomer", customer);
@@ -160,25 +172,22 @@ public class CoffeeShopController {
   }
 
 
-
-
-
-
+  /**
+   * The view for sweets.
+   * @return
+   */
   @RequestMapping(value = "/sweets", method = RequestMethod.GET)
-  public String sweetProducts (HttpSession session,
-                               HttpServletResponse response,
-                               HttpServletRequest request,
-                               Model model) {
+  public String sweetProducts () {
     return "sweets";
   }
 
 
-
+  /**
+   * The view for random food.
+   * @return
+   */
   @RequestMapping(value = {"/amenities"}, method = RequestMethod.GET)
-  public String amenities (HttpSession session,
-                           HttpServletResponse response,
-                           HttpServletRequest request,
-                           Model model) {
+  public String amenities () {
     return "amenities";
   }
 
@@ -213,11 +222,8 @@ public class CoffeeShopController {
    */
   @RequestMapping(value = {"/registration", "/registerCustomer"}, method = {RequestMethod.GET, RequestMethod.POST})
   public String registration(@ModelAttribute("incomingCustomer") Customer customer,
-                             RedirectAttributes redirectAttributes,
-                             HttpServletRequest request,
-                             HttpServletResponse response,
-                             HttpSession session) {
-    // If this is a new currentCustomer.
+                             HttpServletRequest request, HttpServletResponse response, HttpSession session, RedirectAttributes redirectAttributes) {
+    /* If this is a new currentCustomer. */
     if (!(customer.getFirstName() == null && customer.getLastName() == null
       &&customer.getUsername() == null && customer.getPassword() == null && customer.getAddress() == null
       && customer.getAllOrders().isEmpty())) {
@@ -228,11 +234,10 @@ public class CoffeeShopController {
       session = request.getSession(true);
 
 
-      Customer currentCustomer = customerService.getOneCustomer(customer.getId());
+      Customer currentCustomer = customerService.getOneCustomerById(customer.getId());
       System.out.println(currentCustomer.getId());
 
       session.setAttribute("currentCustomer", currentCustomer);
-
 
       return "redirect:/confirmation";
     }

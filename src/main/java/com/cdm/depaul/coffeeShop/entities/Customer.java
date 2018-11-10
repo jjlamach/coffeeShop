@@ -20,10 +20,7 @@ import java.util.Objects;
  */
 @Entity
 @Component
-//@Scope("prototype")
-/* To keep track of the Customer in the session, we change the scope to @Scope("session") */
-//@Scope("session")
-@ApplicationScope
+@Scope("session")
 public class Customer implements iCustomer, Serializable {
 
 
@@ -60,14 +57,7 @@ public class Customer implements iCustomer, Serializable {
    *          Tells Hibernate how to map this table with the other table by using the information
    *          that is at @joinColumn.
    *
-   * orphanRemoval: removes a child(Order) without removing the parent (Customer)
-   * A Link why cascade = {value1...value2...} does not work and why just orphanRemoval works without the cascades.
-   * Link: https://stackoverflow.com/questions/16898085/jpa-hibernate-remove-entity-sometimes-not-working
    */
-  // NOTE: Do not do cascade deletes! D:! It would delete the order if you delete a customer.
-//  @OneToMany(cascade = {CascadeType.ALL},orphanRemoval = true, mappedBy = "customer",targetEntity = Order.class, fetch = FetchType.EAGER)
-
-
   /**
    * Customer -> many orders
    */

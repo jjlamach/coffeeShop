@@ -17,8 +17,7 @@
 <div class="container" align="center">
     <h1>Internal Server Error - 500</h1>
     <p>
-        We know this one! <i class="fas fa-smile-wink"></i><br/>
-        Your username or password does not match with our database.
+        Something went wrong.
     </p>
     <img src="${pageContext.request.contextPath}/resources/images/pikachu.png"
     style="height: 250px; width: 255px;"/>

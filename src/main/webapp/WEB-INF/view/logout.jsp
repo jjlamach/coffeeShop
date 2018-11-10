@@ -13,7 +13,8 @@
           crossorigin="anonymous">
     <link rel="icon" typeof="image/x-icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
 </head>
-<body>
+<body style="background-color: ghostwhite">
+<br/><br/>
 <div class="container" align="center">
     <h1>You have been logged out.</h1>
     <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/login">Back to login</a>

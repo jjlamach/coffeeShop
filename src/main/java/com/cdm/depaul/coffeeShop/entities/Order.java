@@ -1,13 +1,10 @@
 package com.cdm.depaul.coffeeShop.entities;
 
 import com.cdm.depaul.coffeeShop.interfaces.iOrder;
-import org.hibernate.annotations.Cascade;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.ApplicationScope;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -20,9 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "customer_order")
 @Component
-//@Scope("prototype")
-//@Scope("session")
-@ApplicationScope
+@Scope("session")
 public class Order implements iOrder, Serializable {
 
   private static final long serialVersionUID = 4876487231629720215L;
@@ -45,13 +40,8 @@ public class Order implements iOrder, Serializable {
   private double price;
 
   /*
-    Many Orders mapped to one Customer.
-    Don't apply Cascade on deletes! D: it will delete the customer too.
+    Many orders -> Customer
    */
-//  @ManyToOne( cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
-//  /* Will map an Order to a Customer in a table. Foreign Key? */
-//  @JoinColumn(name = "customer_id")
-
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "customer_id", nullable = false)
   private Customer customer;

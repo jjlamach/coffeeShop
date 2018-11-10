@@ -2,7 +2,10 @@ package com.cdm.depaul.coffeeShop.configuration;
 
 import com.cdm.depaul.coffeeShop.entities.Customer;
 import com.cdm.depaul.coffeeShop.entities.Order;
+import com.cdm.depaul.coffeeShop.repositories.CustomerRepository;
+import com.cdm.depaul.coffeeShop.repositories.OrderRepository;
 import com.cdm.depaul.coffeeShop.services.CustomerService;
+import com.cdm.depaul.coffeeShop.services.OrderService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -36,8 +39,17 @@ public class ApplicationContext implements WebMvcConfigurer {
     return new Order();
   }
 
+
+
   @Bean
-  public CustomerService customerService() {return new CustomerService(); }
+  public CustomerService customerService(CustomerRepository customerRepository) {
+    return new CustomerService(customerRepository);
+  }
+
+  @Bean
+  public OrderService orderService(OrderRepository orderRepository) {
+    return new OrderService(orderRepository);
+  }
 
 
   /**
@@ -50,7 +62,10 @@ public class ApplicationContext implements WebMvcConfigurer {
     registry.addRedirectViewController("/registration", "/registration");
   }
 
-
+  /**
+   * Configures the view for the web application.
+   * @return
+   */
   @Bean
   public ViewResolver viewResolver () {
     InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -61,7 +76,7 @@ public class ApplicationContext implements WebMvcConfigurer {
 
   /**
    * Tell Spring where to find the resources for the web application.
-   * If this is not overridden then it won't find the resources
+   * If this is not overridden then it won't find the resources.
    * @param resourceHandlerRegistry
    */
   public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry) {

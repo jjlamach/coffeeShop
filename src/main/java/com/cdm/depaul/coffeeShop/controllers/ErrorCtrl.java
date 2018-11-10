@@ -17,7 +17,7 @@ public class ErrorCtrl implements ErrorController {
     if (statusCode == HttpStatus.NOT_FOUND.value()) {
       return "error-404";
     }
-    // it is a 500.
+    // It is any other error that is not 404.
     return "error";
   }
 

@@ -91,7 +91,8 @@
                     <textarea hidden="true" name="orderDescription">
                         Oreo Cheesecake
                     </textarea>
-                    <input type="submit" style="border: none; background: transparent; color:white;"/>
+                    <input type="submit" style="border: none; background: transparent; color:white;"
+                    value="Add to cart"/>
                 </form:form>
             </footer>
         </div>

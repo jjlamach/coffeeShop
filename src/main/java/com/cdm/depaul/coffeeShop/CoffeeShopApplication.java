@@ -35,16 +35,6 @@ public class CoffeeShopApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-//    List<Customer> customerList = customerService.getAllCustomers();
-//
-//    for (Customer customer : customerList) {
-//      System.out.println(customer.getId());
-//    }
-//    Customer customer = customerService.getOneCustomerByUsername("jlama");
-//    List<Order> orderList = customer.getAllOrders();
-//    for (Order order : orderList) {
-//      System.out.println(order.getId() + " " + order.getName());
-//    }
-//    System.out.println(customer.getUsername() + "---> " + customer.getId());
+
   }
 }
