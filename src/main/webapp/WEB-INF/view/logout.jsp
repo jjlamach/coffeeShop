@@ -16,7 +16,9 @@
 <body style="background-color: ghostwhite">
 <br/><br/>
 <div class="container" align="center">
-    <h1>You have been logged out.</h1>
+    <h1>See you soon!</h1>
+    <img src="${pageContext.request.contextPath}/resources/images/pikachu.png"
+    style="width: 250px; height: 250px;"/>
     <a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/login">Back to login</a>
 </div>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
