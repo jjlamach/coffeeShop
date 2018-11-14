@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -22,14 +21,18 @@ import java.util.List;
 @Scope("session")
 public class CoffeeShopController {
 
-  @Autowired
+
   private CustomerService customerService;
 
-  @Autowired
   private OrderService orderService;
 
 
-  public CoffeeShopController() { }
+  @Autowired
+  public CoffeeShopController(CustomerService customerService, OrderService orderService) {
+    this.customerService = customerService;
+    this.orderService = orderService;
+  }
+
 
   /**
    *
@@ -44,8 +47,10 @@ public class CoffeeShopController {
     return "home";
   }
 
+
+
   /**
-   *
+   * A function that attempts to do mimic a log in.
    * @param customer
    * @param redirectAttributes
    * @return the login view or home.
@@ -79,6 +84,7 @@ public class CoffeeShopController {
    */
   @RequestMapping(value = "/logout", method = {RequestMethod.POST, RequestMethod.GET})
   public String logout(HttpSession session) {
+    session.removeAttribute("currentCustomer");
     session.invalidate();
     return "logout";
   }
@@ -188,7 +194,10 @@ public class CoffeeShopController {
    */
   @RequestMapping(value = {"/registration", "/registerCustomer"}, method = {RequestMethod.GET, RequestMethod.POST})
   public String registration(@ModelAttribute("incomingCustomer") Customer customer,
-                             HttpServletRequest request, HttpServletResponse response, HttpSession session, RedirectAttributes redirectAttributes) {
+                             HttpServletRequest request,
+                             HttpSession session,
+                             RedirectAttributes redirectAttributes) {
+
     /* If this is a new currentCustomer. */
     if (!(customer.getFirstName() == null && customer.getLastName() == null
       &&customer.getUsername() == null && customer.getPassword() == null && customer.getAddress() == null
