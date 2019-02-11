@@ -98,12 +98,12 @@ public class Customer implements iCustomer, Serializable {
     this.orderList.add(order);
   }
 
-  // Just for mapping. Since Hibernate will give me a generated primary key.
+
   @Override
   public void setCustomerId(Long customerId) {
     this.id = customerId;
   }
-  // Just for mapping.
+
   @Override
   public void setAllOrders(List<Order> orderList) {
     this.orderList = orderList;
